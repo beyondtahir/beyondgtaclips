@@ -48,7 +48,7 @@ finished, ready-to-post reels.
 
 ## ⚡ What it does
 
-| | |
+| Step | What happens |
 |---|---|
 | 🔎 **Finds the streams** | Searches YouTube for the **most viewed** GTA 6 streams from the last 24 hours, 48 hours or week, skips re-uploads and compilations, and checks the language. |
 | 👀 **Watches the whole stream** | Looks at the entire stream in seconds and skips the boring parts: waiting rooms, menus, just chatting. Only real gameplay. |
