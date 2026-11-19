@@ -184,6 +184,55 @@ def rich_block(words, size, width, regular="clean", accent_font="clean_bold", co
     return img
 
 
+def skew(img, k=0.2):
+    """Lean an image to the right like italics (top moves right by k * height)."""
+    if img is None or k == 0:
+        return img
+    h = img.height
+    extra = int(math.ceil(abs(k) * h))
+    return img.transform((img.width + extra, h), Image.AFFINE, (1, k, -k * h, 0, 1, 0),
+                         resample=Image.BICUBIC)
+
+
+def slab(text, size, max_width, kind="heavy", fg="FFFFFF", bg="000000", lean=0.2,
+         pad=(0.42, 0.16), overlap=0.08):
+    """Viral split-screen title: each line on its own black box, leaning like italics
+    (the 'AIRPORTS IN GTA 6 ARE INSANE' look). Returns a transparent image."""
+    f = font(kind, size)
+    words = text.upper().split()
+    if not words:
+        return None
+    px, py = int(size * pad[0]), int(size * pad[1])
+    limit = max_width - 2 * px - int(lean * size * 2)
+    lines, cur = [], ""
+    for w in words:
+        trial = f"{cur} {w}".strip()
+        if cur and f.getlength(trial) > limit:
+            lines.append(cur)
+            cur = w
+        else:
+            cur = trial
+    lines.append(cur)
+    asc, desc = f.getmetrics()
+    cap = f.getbbox("H")
+    text_h = cap[3] - cap[1]
+    box_h = text_h + 2 * py + int(size * 0.12)
+    step = int(box_h * (1 - overlap))
+    widths = [int(f.getlength(l)) + 2 * px for l in lines]
+    w = max(widths)
+    img = Image.new("RGBA", (w, step * (len(lines) - 1) + box_h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for i, (line, lw) in enumerate(zip(lines, widths)):
+        x0 = (w - lw) // 2
+        y0 = i * step
+        d.rectangle((x0, y0, x0 + lw, y0 + box_h), fill=rgba(bg))
+    for i, (line, lw) in enumerate(zip(lines, widths)):
+        x0 = (w - lw) // 2
+        y0 = i * step
+        d.text((x0 + px, y0 + (box_h - text_h) / 2 - cap[1]), line, font=f, fill=rgba(fg))
+    return skew(img, lean)
+
+
 def save(img, path):
     path = Path(path)
     img.save(path)
@@ -252,6 +301,18 @@ def circle_mask(d):
     big = Image.new("L", (d * 4, d * 4), 0)
     ImageDraw.Draw(big).ellipse((0, 0, d * 4 - 1, d * 4 - 1), fill=255)
     return big.resize((d, d), Image.LANCZOS)
+
+
+def round_mask(w, h, r):
+    big = Image.new("L", (w * 3, h * 3), 0)
+    ImageDraw.Draw(big).rounded_rectangle((0, 0, w * 3 - 1, h * 3 - 1), radius=r * 3, fill=255)
+    return big.resize((w, h), Image.LANCZOS)
+
+
+def round_box(w, h, r, color):
+    big = Image.new("RGBA", (w * 3, h * 3), (0, 0, 0, 0))
+    ImageDraw.Draw(big).rounded_rectangle((0, 0, w * 3 - 1, h * 3 - 1), radius=r * 3, fill=rgba(color))
+    return big.resize((w, h), Image.LANCZOS)
 
 
 def ring(d, width, color):
@@ -340,6 +401,10 @@ def captions(words, length, style, folder, width):
                                  stroke=style.get("stroke", 0), shadow=style.get("shadow", False),
                                  scale={active: style.get("pop", 1.0)} if active is not None else None,
                                  upper=style.get("upper", False), line_gap=1.15)
+                if style.get("lean"):
+                    img = skew(img.crop(img.getbbox() or (0, 0, img.width, img.height)), style["lean"])
+                    if img.width > width:
+                        img = img.crop((0, 0, width, img.height))
                 canvas = Image.new("RGBA", (width, band), (0, 0, 0, 0))
                 y = max(0, (band - img.height) // 2)
                 canvas.alpha_composite(img.crop((0, 0, img.width, min(img.height, band))),

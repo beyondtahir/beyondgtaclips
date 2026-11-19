@@ -57,7 +57,7 @@ DEFAULTS = {
     "accent": None,                  # None = each template's own accent, or a hex like "FF2D2D"
     "width": 1080,
     "height": 1920,
-    "cam_share": 0.30,               # stack: share of the height given to the facecam
+    "cam_share": 0.32,               # stack: share of the height given to the facecam
     "big_face": 0.13,                # face wider than this share of the frame = talking head
     "punch_ins": True,               # quick zoom on the loudest seconds (bubble, stack)
     "sfx": True,                     # a soft whoosh on the hook, made locally (no files)

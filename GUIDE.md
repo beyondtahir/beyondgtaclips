@@ -67,7 +67,7 @@ The assistant asks:
 | # | Style | Looks like |
 |---|---|---|
 | 1 | **Hook card** (default) | Story sentence on top with the action words in red, gameplay in the middle, captions under it |
-| 2 | **Stack** | Small streamer camera on top, gameplay below, pop captions, quick zooms |
+| 2 | **Stack** | Streamer in a framed box on top, a line with the hook text, the caption, then the full game screen below |
 | 3 | **Bubble** | Full-screen gameplay, the streamer's face in a circle at the bottom |
 | 4 | **Cinematic** | Movie look: blurred backdrop, slow zoom, quiet subtitles |
 | 5 | **Breaking news** | BREAKING headline, gameplay, red scrolling ticker |

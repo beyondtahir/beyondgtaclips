@@ -97,7 +97,7 @@ def styles():
     img = Path(__file__).resolve().parents[2] / "assets" / "styles.png"
     print(f"\n  Screenshot of all five styles: {img}\n")
     rows = [("1", "hookcard", "Hook card", "story text on top, action words in red, no facecam"),
-            ("2", "stack", "Stack", "small facecam on top, gameplay below"),
+            ("2", "stack", "Stack", "streamer on top, full game below"),
             ("3", "bubble", "Bubble", "full-screen gameplay, face bubble at the bottom"),
             ("4", "cinematic", "Cinematic", "movie look, slow push-in, no facecam"),
             ("5", "news", "Breaking news", "headline and red ticker, no facecam")]

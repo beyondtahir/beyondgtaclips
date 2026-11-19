@@ -51,6 +51,9 @@ Built by Claude on 19 Nov 2026 from MiniMax's investigation (`OVERVIEW.md`, `DEV
   captions could not work on this Mac): rich hook text with colour emoji, caption frames as an
   ffconcat image sequence, stickers, ticker, bubble mask.
 - Five templates: hookcard, stack, bubble, cinematic, news (`scripts/bgt/templates.py`).
+- Stack redesigned (2026-11-19, from a viral split-screen reel): streamer in a framed box on
+  top at its own shape (no stretching), divider line with the title on leaning boxes, one big
+  leaning caption word, the whole 16:9 stream screen below.
 - Punch-in zooms on volume spikes, synthesised whoosh + pop, cinematic push-in and fades,
   platform safe zones, creator credit in every template.
 - `--template all` renders every style per clip; `remake` re-renders with a new hook, title,

@@ -159,7 +159,7 @@ At the typical **$1 per 1,000 views** campaign rate:
 | # | Style | What it looks like | Best for |
 |---|---|---|---|
 | **1** | **Hook card** ⭐ default | Story sentence on top with the action words in **red**, gameplay in the middle | Shocking moments, NPC chaos, discoveries |
-| 2 | **Stack** | Small streamer cam on top, gameplay below, pop captions, punch-in zooms | Big reactions |
+| 2 | **Stack** | Streamer in a framed box on top, hook text on a divider line, then the **full game screen** below | Big reactions |
 | 3 | **Bubble** | Full-screen gameplay, streamer's face in a circle at the bottom | Fast hype moments |
 | 4 | **Cinematic** | Movie look, slow zoom, quiet subtitles | Beautiful or emotional scenes |
 | 5 | **Breaking news** | BREAKING headline and a red ticker | Secrets, hidden features, big finds |

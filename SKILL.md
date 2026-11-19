@@ -101,11 +101,11 @@ Three styles with text on top and no facecam panel:
 | `cinematic` (4) | blurred backdrop, wide gameplay with a slow push-in, letter-spaced label and headline on top, quiet subtitles, fades | beautiful or emotional scenes, slow stories |
 | `news` (5) | BREAKING tag and condensed headline on top, wide gameplay, scrolling red ticker | secrets, hidden features, big discoveries |
 
-Two styles with a small facecam:
+Two styles with the streamer's face:
 
 | Style | Looks like | Best for |
 |---|---|---|
-| `stack` (2) | small facecam strip on top (30%), gameplay below, title sticker on the join, yellow pop captions, punch-in zooms | reactions where the streamer's face adds to the moment |
+| `stack` (2) | the streamer in a white-framed box on top (never stretched), a yellow divider line carrying the title on white leaning boxes, one big leaning caption word, then the **whole 16:9 stream screen** below | reactions where the streamer's face adds to the moment |
 | `bubble` (3) | full-screen gameplay, the streamer's face in a small round bubble at the bottom, big 2-word pop captions | fast hype moments |
 
 Every style keeps text out of the TikTok/Reels button zones and works in Instagram's 4:5 feed crop.

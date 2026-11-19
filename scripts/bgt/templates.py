@@ -6,7 +6,8 @@ with ffmpeg + Pillow graphics. Clean rules shared by all of them:
 
   hookcard   story sentence on black, *accent words* in bold red, gameplay 5:4 in the middle,
              red captions on the clip, empty band below (the memezar / viral reel look)
-  stack      facecam on top, gameplay below, title sticker on the join, pop captions,
+  stack      facecam on top, gameplay below, one big leaning caption word under the divide,
+             title on black leaning boxes (the split-screen viral look),
              punch-in zooms on the loudest seconds
   bubble     full-screen gameplay, the streamer's face in a small round bubble at the bottom,
              big 2-word pop captions, title sticker for the first 3 seconds, punch-ins
@@ -150,39 +151,76 @@ def hookcard(g, ctx):
 
 
 def stack(g, ctx):
+    """Streamer in a framed box on top, a divider line carrying the hook title, one big
+    caption word, then the whole 16:9 stream screen below (nothing cropped or stretched)."""
     info, pick, accent, cfg = ctx["info"], ctx["pick"], ctx["accent"], ctx["cfg"]
-    cam = ctx["cam"]
-    top = even(H * cfg["cam_share"])
-    low = H - top
     sw, sh = info["width"], info["height"]
-    x, y, w, h = cam
-    aim = W / top
-    cw, ch = (h * aim, h) if w / h > aim else (w, w / aim)
-    face = ctx.get("face")
-    if face:                                   # centre on the face, not on the whole overlay
-        fcx, fcy = face[0] + face[2] / 2, face[1] + face[3] / 2
-        cx = min(max(fcx - cw / 2, x), x + w - cw)
-        cy = min(max(fcy - ch * 0.45, y), y + h - ch)
-    else:
-        cx, cy = x + (w - cw) / 2, y + (h - ch) / 2
-    cx = min(max(cx, 0), sw - cw)
-    cy = min(max(cy, 0), sh - ch)
-    gw, gh, gx, gy = window(info, W / low, cam)
-    c1, g1, out = g.label(), g.label(), g.label()
-    g.add(f"[src_cam]crop={even(cw)}:{even(ch)}:{even(cx)}:{even(cy)},scale={W}:{top}:flags=lanczos,setsar=1[{c1}]")
-    g.add(f"[src_main]crop={gw}:{gh}:{gx}:{gy},scale={W}:{low}:flags=lanczos,setsar=1[{g1}]")
-    g1 = punch(g, g1, W, low, ctx["punches"])
-    g.add(f"[{c1}][{g1}]vstack=inputs=2,format=yuv420p[{out}]")
-    g.last = out
-    title = (pick.get("title") or "").upper()
+    game_h = even(W * 9 / 16)
+    game_y = even(H - 250 - game_h)                 # above TikTok/Reels' bottom caption block
+    cap_y = game_y - 74                             # caption word just above the game
+    background(g, "000000")
+
+    title = stack_title(pick)
+    slab = None
     if title:
-        sticker = art.pill(title, 54, bg="FFFFFF", fg="111111", max_width=W - 160)
-        g.place(sticker, "title", "center", top - sticker.height // 2)
+        size = 74 if len(title) <= 26 else 62
+        slab = art.slab(title, size, W - 140, fg="111111", bg="FFFFFF")
+    slab_h = slab.height if slab else 0
+    line_y = even(cap_y - 62 - slab_h / 2) if slab else cap_y - 70
+
+    # the streamer: their own camera box, kept at its own shape, as big as fits
+    x, y, w, h = ctx["cam"]
+    inset = 0.03                                    # stay inside the overlay's coloured border
+    x, y, w, h = x + w * inset, y + h * inset, w * (1 - 2 * inset), h * (1 - 2 * inset)
+    x, y = max(0.0, x), max(0.0, y)
+    w, h = min(w, sw - x), min(h, sh - y)
+    area_top, area_bottom = 130, line_y - slab_h / 2 - 44
+    want = min(980 / (area_bottom - area_top), 1.3)  # a squarish cam looks small: trim
+    if w / h < want:                                  # headroom/desk to a wider shape
+        nh = w / want
+        face = ctx.get("face")
+        mid = face[1] + face[3] * 0.6 if face else y + h / 2
+        y = min(max(mid - nh / 2, y), y + h - nh)
+        h = nh
+    fit = min(980 / w, (area_bottom - area_top) / h)
+    fw, fh = even(w * fit), even(h * fit)
+    fx, fy = even((W - fw) / 2), even(area_top + (area_bottom - area_top - fh) / 2)
+    border, radius = 6, 30
+    g.place(art.round_box(fw + 2 * border, fh + 2 * border, radius + border, "FFFFFF"), "frame",
+            fx - border, fy - border)
+    cam_v, mask, cam_m = g.label(), g.label(), g.label()
+    mask_in = g.image(art.round_mask(fw, fh, radius), "cam_mask")
+    g.add(f"[src_cam]crop={even(w)}:{even(h)}:{even(x)}:{even(y)},scale={fw}:{fh}:flags=lanczos,"
+          f"setsar=1,format=rgba[{cam_v}]")
+    g.add(f"[{mask_in}]format=gray,scale={fw}:{fh}[{mask}]")
+    g.add(f"[{cam_v}][{mask}]alphamerge[{cam_m}]")
+    g.over(cam_m, fx, fy)
+
+    # the whole stream screen, edge to edge
+    gw, gh, gx, gy = window(info, 16 / 9)
+    game = g.label()
+    g.add(f"[src_main]crop={gw}:{gh}:{gx}:{gy},scale={W}:{game_h}:flags=lanczos,setsar=1[{game}]")
+    game = punch(g, game, W, game_h, ctx["punches"])
+    g.over(game, 0, game_y)
+
+    # divider line with the hook title riding on it
+    g.place(art.bar(W, 6, accent), "divider", 0, line_y - 3)
+    if slab:
+        g.place(slab, "title", "center", line_y - slab_h // 2)
+    g.captions(ctx["words"], {"font": "heavy", "size": 70, "color": "FFFFFF", "active": None,
+                              "stroke": 3, "shadow": True, "upper": True, "words": 1, "lean": 0.2},
+               cap_y)
     if cfg.get("show_creator", True) and ctx.get("creator"):
         g.place(art.pill(ctx["creator"], 28, bg="111111", fg="FFFFFF", kind="label"), "chip", 40, 70)
-    g.captions(ctx["words"], {"font": "heavy", "size": 78, "color": "FFFFFF", "active": accent,
-                              "pop": 1.12, "stroke": 8, "upper": True, "words": 3},
-               int(H * 0.70))
+
+
+def stack_title(pick):
+    """Short statement for the split-screen title: the headline when it is short, else the title."""
+    clean = lambda s: " ".join(art.re.sub(r"[*#]", "", s or "").split())
+    head, title = clean(pick.get("headline")), clean(pick.get("title"))
+    if head and len(head) <= 40 and len(head.split()) <= 8:
+        return head
+    return title or head
 
 
 def bubble(g, ctx):
