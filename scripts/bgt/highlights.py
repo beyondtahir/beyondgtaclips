@@ -65,10 +65,15 @@ Reply with a JSON array and nothing else (no prose, no markdown fence). Example 
 
 Never put self-harm, suicide, slurs, sexual content or real threats in hook, title, headline \
 or caption, even as a joke or a quote from the stream: platforms limit or remove those posts.
-hook: the sentence shown above the clip. 10-22 words, tells the story like a friend would, \
+hook: the sentence shown above the clip. 8-16 words, tells the story like a friend would, \
 teases the payoff without giving it away. Wrap the 1-3 words that carry the drama in \
-*asterisks* (they are coloured). At most one emoji, at the end.
-alt_hooks: two different hooks for A/B testing (a question, a bold claim).
+*asterisks* (they are coloured). At most one emoji, at the end. No dashes (— or –): use a comma.
+TRUE HOOKS ONLY: a hook may only say what the transcript shows happens in this clip. Never \
+invent backstory, relationships, feelings or events that are not in it ("he trusted her", \
+"after 3 hours"). Call the streamer by name (<<CREATOR>>). The character on screen can be \
+someone else (in GTA 6 the player is often Lucia, a woman, or Jason), so never mix up the \
+streamer and the character, or their he/she.
+alt_hooks: two different hooks for A/B testing (a question, a bold claim), same rules.
 title: 2-5 punchy words for an on-screen sticker, CAPITALS.
 headline: a news-style line, 4-9 words, for the breaking-news look.
 style: the edit that fits best:
@@ -78,7 +83,7 @@ style: the edit that fits best:
   cinematic a beautiful, quiet or emotional scene, a story told slowly
   news      new information: a secret, a leak, a hidden feature, a big discovery
 caption: the post text, under 140 characters, ending with a question or a nudge to comment.
-hashtags: 5-7 tags: one huge (#gta6), two mid-size, two niche, plus the creator.
+hashtags: 4-6 tags: one huge (#gta6), two mid-size, two niche. Leave out the creator tag: it is added for you.
 score: 1-100, how likely a stranger watches to the end. Be strict: 80+ only for clips you \
 would bet money on.
 why: one short sentence.
@@ -187,7 +192,39 @@ def _text(value, limit):
     return re.sub(r"\s+", " ", str(value or "")).strip()[:limit]
 
 
-def tidy(pick, words, cfg):
+DASH = re.compile(r"\s*[\u2014\u2013]\s*|\s+-\s+")
+NAME_FILLER = {"live", "tv", "official", "yt", "clips", "gaming", "vods"}
+
+
+def _plain(text):
+    """No em or en dashes on screen: they read as AI writing. 'a — b' -> 'a, b'."""
+    text = DASH.sub(", ", text)
+    return re.sub(r",\s*,", ",", text).strip(" ,")
+
+
+def creator_tag(name):
+    """'Kai Cenat Live' -> '#kaicenat', 'Typical Gamer' -> '#typicalgamer'."""
+    words = re.findall(r"[A-Za-z0-9]+", str(name or "").lower())
+    keep = [w for w in words if w not in NAME_FILLER] or words
+    tag = "".join(keep)
+    return f"#{tag}" if tag else ""
+
+
+def _tags(tags, creator):
+    """Clean tags, drop misspelt copies of the creator tag, then add the correct one."""
+    import difflib
+    tags = [t if str(t).startswith("#") else f"#{t}" for t in
+            (re.sub(r"[^\w#]", "", str(t)).lower() for t in tags) if t.strip("#")]
+    out = []
+    for t in tags:
+        near = creator and t != creator and difflib.SequenceMatcher(None, t, creator).ratio() >= 0.75
+        if not near and t != creator and t not in out:
+            out.append(t)
+    out = out[:6]
+    return out + [creator] if creator else out
+
+
+def tidy(pick, words, cfg, creator=None):
     """Move the AI's times onto clean word boundaries, keep the length in range, clean fields."""
     try:
         s, e = float(pick["start"]), float(pick["end"])
@@ -238,16 +275,15 @@ def tidy(pick, words, cfg):
     out["type"] = _text(pick.get("type") or "moment", 20)
     style = str(pick.get("style") or "").lower().strip()
     out["style"] = style if style in STYLES else "hookcard"
-    out["hook"] = _text(pick.get("hook") or pick.get("title"), 220)
-    out["alt_hooks"] = [_text(h, 220) for h in (pick.get("alt_hooks") or []) if _text(h, 220)][:2]
-    out["title"] = _text(pick.get("title"), 60)
-    out["headline"] = _text(pick.get("headline") or pick.get("title"), 90)
-    out["caption"] = _text(pick.get("caption"), 220)
+    out["hook"] = _plain(_text(pick.get("hook") or pick.get("title"), 220))
+    out["alt_hooks"] = [_plain(_text(h, 220)) for h in (pick.get("alt_hooks") or []) if _text(h, 220)][:2]
+    out["title"] = _plain(_text(pick.get("title"), 60))
+    out["headline"] = _plain(_text(pick.get("headline") or pick.get("title"), 90))
+    out["caption"] = _plain(_text(pick.get("caption"), 220))
     tags = pick.get("hashtags") or []
     if isinstance(tags, str):
         tags = tags.split()
-    out["hashtags"] = [t if str(t).startswith("#") else f"#{t}" for t in
-                       (re.sub(r"[^\w#]", "", str(t)) for t in tags) if t.strip("#")][:7]
+    out["hashtags"] = _tags(tags, creator_tag(creator) if creator else "")
     out["why"] = _text(pick.get("why"), 200)
     out["picked_by"] = pick.get("picked_by", "ai")
     return out
@@ -431,7 +467,7 @@ def pick(heard, spike_db, chat, lo, hi, work, cfg, video, brain, model=None, red
             good = []
             for m in got:
                 if isinstance(m, dict):
-                    t = tidy(m, words, cfg)
+                    t = tidy(m, words, cfg, video.get("name"))
                     if t and a - 5 <= t["start"] < b + 5:
                         good.append(t)
             return good
@@ -444,7 +480,7 @@ def pick(heard, spike_db, chat, lo, hi, work, cfg, video, brain, model=None, red
         if brain != "none":
             say(f"the AI found {len(chosen)} strong moment(s); filling up from the loudest "
                 f"moments so the stream still gives {n} clips", "warn")
-        extra = [tidy(p, words, cfg) for p in signal_picks(heard, spike_db, chat, lo, hi, cfg, video, n, screen)]
+        extra = [tidy(p, words, cfg, video.get("name")) for p in signal_picks(heard, spike_db, chat, lo, hi, cfg, video, n, screen)]
         for p in sorted((p for p in extra if p), key=lambda p: -p["score"]):
             if len(chosen) >= n * 2:
                 break

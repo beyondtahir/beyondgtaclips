@@ -54,6 +54,10 @@ Built by Claude on 19 Nov 2026 from MiniMax's investigation (`OVERVIEW.md`, `DEV
 - Stack redesigned (2026-11-19, from a viral split-screen reel): streamer in a framed box on
   top at its own shape (no stretching), divider line with the title on leaning boxes, one big
   leaning caption word, the whole 16:9 stream screen below.
+- True hooks (2026-11-20, from a real 4-clip run): the AI may only describe what happens in the clip
+  (no invented backstory), names the streamer, keeps the streamer and the character (Lucia/Jason)
+  apart, 8-16 words. Dashes in hooks, titles and captions become commas. The creator hashtag is
+  built from the channel name and misspelt copies are dropped (`#kaicentlive` -> `#kaicenat`).
 - Punch-in zooms on volume spikes, synthesised whoosh + pop, cinematic push-in and fades,
   platform safe zones, creator credit in every template.
 - `--template all` renders every style per clip; `remake` re-renders with a new hook, title,
