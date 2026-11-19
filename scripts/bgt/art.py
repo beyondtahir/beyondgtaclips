@@ -350,7 +350,25 @@ def _foreign(c):
 
 
 def _clean(word):
-    return re.sub(r"[{}\\*]", "", word).strip()
+    word = re.sub(r"[{}\\]", "", word).strip()
+    return "" if not word.strip("*") else word        # keep the stars of a masked swear (f**k)
+
+
+SLURS = re.compile(r"^(nigg(a|er|ah|uh)s?z?|niggaz|fag(got)?s?|retard(ed|s)?|cunts?|tr[a@]nn(y|ies))$", re.I)
+SWEARS = re.compile(r"^(mother)?f+u+c*k+\w*|^(bull)?shit(s|ty|ting|ted|ter)?$|^bitch(es|y|ing)?$|^dick(s|head)?$|^puss(y|ies)$|^ass(hole)?s?$", re.I)
+
+
+def mask(word):
+    """Platform-safe captions: slurs fully starred (n****), swears softened (f**k, sh*t)."""
+    core = re.sub(r"^\W+|\W+$", "", word)
+    if not core:
+        return word
+    lead, tail = word[:word.find(core)], word[word.find(core) + len(core):]
+    if SLURS.match(core):
+        return lead + core[0] + "*" * (len(core) - 1) + tail
+    if SWEARS.match(core) and len(core) > 2:
+        return lead + core[0] + "*" * (len(core) - 2) + core[-1] + tail
+    return word
 
 
 def captions(words, length, style, folder, width):
@@ -365,6 +383,8 @@ def captions(words, length, style, folder, width):
     blank = folder / "cap_blank.png"
     Image.new("RGBA", (width, band), (0, 0, 0, 0)).save(blank)
     words = [w for w in words if w["e"] > 0 and w["s"] < length and _clean(w["w"])]
+    if style.get("clean", True):
+        words = [dict(w, w=mask(w["w"])) for w in words]
     latin = [w for w in words if not any(_foreign(c) for c in w["w"])]
     if words and len(latin) >= 0.7 * len(words):
         # mostly Latin speech: stray CJK/other characters are Whisper mishearing, drop them

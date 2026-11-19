@@ -22,6 +22,7 @@
 </p>
 
 <p align="center">
+  <a href="#-new-the-story-check"><b>✨ New</b></a> ·
   <a href="#-quick-start"><b>🚀 Quick start</b></a> ·
   <a href="#-who-pays-for-clips"><b>💰 Who pays for clips</b></a> ·
   <a href="#-five-viral-styles"><b>🎨 Styles</b></a> ·
@@ -30,14 +31,31 @@
 </p>
 
 <p align="center">
-  <img src="assets/brand/demo.gif" alt="Three real reels made by Beyond GTA Clips" width="760">
+  <img src="assets/brand/demo.gif" alt="Five real reels made by Beyond GTA Clips" width="100%">
   <br>
-  <sub>Real reels, made automatically from one GTA 6 launch stream. Left to right: Hook card, Stack, Bubble.</sub>
+  <sub>Real reels, made automatically from GTA 6 launch streams. Left to right: three new <b>Hook card</b> clips
+  (Kai Cenat's NPC fight, Kai's prison gang pick, Typical Gamer's "9% done"), then <b>Stack</b> and <b>Bubble</b> with the streamer's face.</sub>
 </p>
 
 > [!TIP]
 > **⭐ Star this repo** so you can find it again when the next big stream drops.
 > It takes one click and it helps other clippers find a free tool.
+
+## ✨ New: the story check
+
+Clips used to be picked from the sound alone. Sometimes the hook promised something that never
+showed up, or the cut stopped one second before the punchline. Now your AI **looks at the frames**
+of every moment before it cuts:
+
+- 🎬 **The whole scene.** Each clip starts 3-10 seconds before the crazy thing happens and ends right after the streamer's reaction.
+- 🎯 **Hooks that match the picture.** If the hook says something the video doesn't show, it gets rewritten. If nothing worth posting is on screen, a backup moment takes its place.
+- 🧼 **Clean captions.** Slurs and swear words are starred out in the on-screen text (f\*\*k). The streamer's voice is never changed.
+
+<p align="center">
+  <img src="assets/brand/story-check.jpg" alt="Before and after the story check: a hook about a gun that never appears becomes the real gang-pick scene, and a fight clip now includes its punchline" width="100%">
+</p>
+
+Works the same in Claude and ChatGPT (and Kimi, Gemini or no AI at all). Nothing new to learn: you ask for clips exactly like before.
 
 ---
 
@@ -144,9 +162,10 @@ At the typical **$1 per 1,000 views** campaign rate:
 | 👀 **Watches the whole stream** | Looks at the entire stream in seconds and skips waiting rooms, menus and just chatting. Only real gameplay. |
 | 👂 **Listens for the hype** | Finds the moments where the streamer screams, laughs and chat explodes. |
 | 🧠 **Picks the viral moments** | Your AI chooses the funniest, most shocking moments and writes a hook for each. |
-| ✂️ **Cuts only what it needs** | Downloads only those seconds of video, not the whole 10 hours. |
-| 🎬 **Edits like a pro** | 9:16, hook text, word-by-word captions, zooms and sound effects in 5 styles. |
-| ✅ **Checks its own work** | Looks at every reel and fixes any hook that doesn't match the picture. |
+| ✂️ **Cuts only what it needs** | Downloads only those seconds of video (plus a little extra on each side), not the whole 10 hours. |
+| 🎞️ **Checks the story** | Looks at the frames and re-cuts each moment so it shows the whole scene, from just before the surprise to the end of the reaction. Rewrites a hook that doesn't match the picture. |
+| 🎬 **Edits like a pro** | 9:16, hook text, word-by-word captions (swears starred out), zooms and sound effects in 5 styles. |
+| ✅ **Checks its own work** | Looks at every finished reel before handing it to you. |
 
 ---
 

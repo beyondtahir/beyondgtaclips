@@ -230,6 +230,7 @@ def prepare(index, pick, ctx, cfg, memory):
                                      ctx["language"])
         analysis = frame.analyze(part, offset, length, info, cfg, memory, ctx.get("cam"))
         job = {"v": JOB_VERSION, "part": str(part), "info": info, "offset": offset, "length": length, "sync": conf,
+               "at": start - offset,                     # stream time of the footage's first frame
                "words": words, "analysis": analysis,
                "punches": punch_windows(ctx.get("spike_db"), start, end, cfg)}
         write_json(clips_dir / f"{key}.job.json", job)

@@ -172,20 +172,29 @@ def check(job, pick, ctx, cfg, memory, key):
                f"labelled with its time (open and look at every image before answering: "
                + ", ".join(str(p) for p in pics) + ")") if vision else \
               "no pictures are available, so judge the scene from the words"
-        prompt = _fill(TOPIC=_safe(ctx.get("topic")), CREATOR=_safe(ctx.get("creator")), SEE=see,
+        from .highlights import streamer_name
+        prompt = _fill(TOPIC=_safe(ctx.get("topic")), CREATOR=_safe(streamer_name(ctx.get("creator"))), SEE=see,
                        A=f"{a:.1f}", B=f"{b:.1f}", HOOK=_safe(pick.get("hook")), WHY=_safe(pick.get("why")),
                        MIN=cfg["min_len"], MAX=cfg["max_len"], DUR=f"{dur:.0f}",
                        TEXT=_lines(job["part_words"]))
         if brain == "agent":
             q = clips_dir / f"{key}.story.prompt.txt"
             q.write_text(prompt, encoding="utf-8")
-            (clips_dir / "STORY_TASK.md").write_text(TASK + f"- prompt: `{q}`\n  answer: `{ans_file}`\n",
-                                                     encoding="utf-8")
-            raise brains.NeedAgent([(q, ans_file)])
+            raise brains.NeedAgent([(q, ans_file)])     # the pipeline writes STORY_TASK.md for all
         say("  checking the story: looking at the frames and the words...")
         try:
-            raw = brains.ask(brain, prompt, ctx.get("model"), work, ctx.get("brain_cmd"),
-                             images=pics if vision else None)
+            try:
+                raw = brains.ask(brain, prompt, ctx.get("model"), work, ctx.get("brain_cmd"),
+                                 images=pics if vision else None)
+            except brains.SignedOut:
+                raise
+            except Problem:
+                if not vision:
+                    raise
+                say("  this AI could not take the pictures; checking from the words only", "warn")
+                raw = brains.ask(brain, prompt.replace(see, "no pictures are available, so judge "
+                                                       "the scene from the words"),
+                                 ctx.get("model"), work, ctx.get("brain_cmd"))
             answer = _parse(raw)
         except brains.SignedOut:
             raise
@@ -214,7 +223,7 @@ def apply(answer, job, pick, ctx, cfg, memory, dur):
         s = max(0.0, e - lo_len)
     if e - s > hi_len:
         s = e - hi_len
-    at = pick["start"] - old_a                     # stream time of the footage's first frame
+    at = job.get("at", pick["start"] - old_a)      # stream time of the footage's first frame
     pick = dict(pick)
     for k in ("hook", "title", "headline", "caption"):
         v = re.sub(r"\s*[—–]\s*", ", ", str(answer.get(k) or "")).strip()
@@ -227,6 +236,7 @@ def apply(answer, job, pick, ctx, cfg, memory, dur):
     pick["start"], pick["end"] = round(at + s, 2), round(at + e, 2)
     moved = abs(s - old_a) > 0.3 or abs(e - (old_a + job["length"])) > 0.3
     job = dict(job)
+    job["at"] = at
     job["offset"], job["length"] = s, e - s
     job["words"] = [{**w, "s": round(w["s"] - s, 3), "e": round(w["e"] - s, 3)}
                     for w in job["part_words"] if s - 0.05 <= w["s"] and w["e"] <= e + 0.3]

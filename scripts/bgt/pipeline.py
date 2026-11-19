@@ -104,7 +104,9 @@ def process(url, opts, cfg):
             except Exception as exc:  # noqa: BLE001 - one bad clip must not stop the rest
                 say(f"  clip failed: {str(exc)[:300]}; trying the next moment", "bad")
     write_json(work / "cam.json", memory)
-    if waiting:
+    if waiting:                                     # agent mode: one task file for every clip
+        (work / "clips" / "STORY_TASK.md").write_text(
+            story.TASK + "".join(f"- prompt: `{q}`\n  answer: `{a}`\n" for q, a in waiting), encoding="utf-8")
         raise brains.NeedAgent(waiting)
 
     summary = (f"{human(hi - lo)} of stream -> {len(made)} clip(s) in {human(watch.total())} ("

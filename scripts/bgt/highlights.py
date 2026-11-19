@@ -215,6 +215,13 @@ def _plain(text):
     return re.sub(r",\s*,", ",", text).strip(" ,")
 
 
+def streamer_name(name):
+    """'Kai Cenat Live' -> 'Kai Cenat': the name people know, for hooks."""
+    words = str(name or "").split()
+    keep = [w for w in words if w.lower().strip(".,|-") not in NAME_FILLER] or words
+    return " ".join(keep) or str(name or "")
+
+
 def creator_tag(name):
     """'Kai Cenat Live' -> '#kaicenat', 'Typical Gamer' -> '#typicalgamer'."""
     words = re.findall(r"[A-Za-z0-9]+", str(name or "").lower())
@@ -440,7 +447,7 @@ def pick(heard, spike_db, chat, lo, hi, work, cfg, video, brain, model=None, red
                       + ". Moments about these get extra reach.")
 
         def prompt_for(a, b, body):
-            return fill(TITLE=_safe(video["title"]), CREATOR=_safe(video["name"]),
+            return fill(TITLE=_safe(video["title"]), CREATOR=_safe(streamer_name(video["name"])),
                         TOPIC=_safe(video["topic"]), TRENDS=trends,
                         FOCUS=f"\nWhat the clipper wants: {_safe(video['focus'])}" if video.get("focus") else "",
                         K=cfg["picks_per_part"], MIN=cfg["min_len"], MAX=cfg["max_len"],

@@ -65,6 +65,13 @@ Built by Claude on 19 Nov 2026 from MiniMax's investigation (`OVERVIEW.md`, `DEV
   screen, or drops it for a backup (`scripts/bgt/story.py`, setting `story_check`). Claude reads
   the images, Codex gets them with `-i`, agent mode via `STORY_TASK.md`, other brains judge
   from the words only, `--brain none` skips it.
+- Clean captions (2026-11-20): slurs are fully starred (n****) and swears softened (f**k) in the
+  on-screen captions only; the audio is never changed (`art.mask`, caption style `clean`). Hooks
+  use the streamer's plain name ("Kai Cenat", not the channel's "Kai Cenat Live"). Agent mode
+  writes one `STORY_TASK.md` for every clip; a brain that can't take images is retried with the
+  words only. Each clip remembers the stream time of its footage (`at`) so reruns stay exact.
+- README: new demo GIF (three story-checked Hook card clips + Stack and Bubble) and a
+  before/after story check picture.
 - Punch-in zooms on volume spikes, synthesised whoosh + pop, cinematic push-in and fades,
   platform safe zones, creator credit in every template.
 - `--template all` renders every style per clip; `remake` re-renders with a new hook, title,
