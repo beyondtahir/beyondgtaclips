@@ -1,0 +1,7 @@
+# Creators to always check when you run `find`. One per line:
+#   youtube:@<handle>       e.g. youtube:@IShowSpeed
+#   twitch:<login>          e.g. twitch:kaicenat
+#   kick:<name>             needs --cookies <browser>
+# Add a topic after a | to only check that creator for that topic:
+#   twitch:xqc | gta 6
+# Lines starting with # are ignored. Only recent videos whose title matches the topic are used.
