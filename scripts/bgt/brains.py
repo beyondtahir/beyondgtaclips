@@ -131,20 +131,23 @@ def _call(cmd, stdin_text=None, cwd=None):
     return proc.stdout
 
 
-def ask(brain, prompt, model=None, scratch: Path = None, custom_cmd=None):
-    """Send one prompt, return the raw text reply. Always runs in a scratch folder."""
+def ask(brain, prompt, model=None, scratch: Path = None, custom_cmd=None, images=None):
+    """Send one prompt, return the raw text reply. Always runs in a scratch folder.
+    `images`: picture files the brain should look at (claude reads them, codex attaches them)."""
     scratch = Path(scratch or tempfile.gettempdir())
     run_dir = scratch / "brain-scratch"
     run_dir.mkdir(parents=True, exist_ok=True)
     cwd = str(run_dir)
     exe = binary(brain) if brain in BINARIES else None
     if brain == "claude":
-        return _call([exe, "-p", *(["--model", model] if model else [])], prompt, cwd=cwd)
+        look = ["--allowedTools", "Read", "--add-dir", str(Path(images[0]).parent)] if images else []
+        return _call([exe, "-p", *look, *(["--model", model] if model else [])], prompt, cwd=cwd)
     if brain == "codex":
         out = run_dir / f"codex_reply_{os.getpid()}_{id(prompt)}.txt"
         _call([exe, "exec", "--skip-git-repo-check", "--sandbox", "read-only",
                "--color", "never", "--output-last-message", str(out),
-               *(["-m", model] if model else []), "-"], prompt, cwd=cwd)
+               *(["-m", model] if model else []),
+               *[x for img in (images or []) for x in ("-i", str(img))], "-"], prompt, cwd=cwd)
         try:
             return out.read_text(encoding="utf-8")
         finally:

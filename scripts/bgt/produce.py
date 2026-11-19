@@ -9,10 +9,11 @@ from functools import lru_cache
 
 import numpy as np
 
-from . import art, frame, listen, media, templates
+from . import art, frame, listen, media, story, templates
 from .common import Problem, decode, probe, read_json, run, say, slug, write_json
 
 PAD = 5.0          # extra seconds fetched on each side; trimmed after syncing
+LEAD, TAIL = 14.0, 10.0   # extra footage so the story check can move the cut to the whole scene
 ENV_RATE = 100     # envelope samples per second used for syncing
 
 
@@ -213,13 +214,15 @@ def prepare(index, pick, ctx, cfg, memory):
         job = refresh(cached, cfg, ctx.get("cam"))
         write_json(clips_dir / f"{key}.job.json", job)
     else:
-        part = media.video_slice(ctx["url"], ctx["args"], start - PAD, end + PAD, part,
+        lead = LEAD if ctx.get("brain", "none") != "none" else PAD
+        tail = TAIL if ctx.get("brain", "none") != "none" else PAD
+        part = media.video_slice(ctx["url"], ctx["args"], start - lead, end + tail, part,
                                  cfg["video_height"], live=ctx.get("live", False))
         info = probe(part)
         if not info["width"]:
             raise Problem("the downloaded video has no picture")
-        at, conf = sync(part, ctx["audio"], start - PAD)
-        offset = start - at if conf >= 0.45 else min(PAD, max(0.0, start))
+        at, conf = sync(part, ctx["audio"], max(0.0, start - lead))
+        offset = start - at if conf >= 0.45 else min(lead, max(0.0, start))
         offset = min(max(0.0, offset), max(0.0, info["duration"] - length))
         if conf < 0.45:
             say(f"  weak sound match ({conf:.2f}); using the requested times, may be off by ~1 s", "warn")
@@ -234,6 +237,7 @@ def prepare(index, pick, ctx, cfg, memory):
     job.update({"folder": clips_dir, "pick": pick, "creator": ctx.get("creator"),
                 "topic": ctx.get("topic"), "fast": ctx.get("fast", False), "name": name})
     job["part"] = clips_dir / f"{key}.src.mp4"
+    job["key"] = key
     return job
 
 
@@ -247,6 +251,14 @@ def make(index, pick, ctx, cfg, memory):
     say(f"clip {index}: {pick.get('title') or pick.get('type')}  ({end - start:.0f}s at "
         f"{int(start // 3600)}:{int(start // 60 % 60):02d}:{int(start % 60):02d})", "step")
     job = prepare(index, pick, ctx, cfg, memory)
+    key = job["key"]
+    pick, job = story.check(job, pick, ctx, cfg, memory, key)
+    job["pick"] = pick
+    job["name"] = f"{index:02d}_{slug(pick.get('title') or pick.get('type'), 40)}"   # the checked title
+    start, end = pick["start"], pick["end"]
+    saved = {k: v for k, v in job.items() if k not in ("folder", "pick", "creator", "topic", "fast", "name", "key")}
+    saved["part"] = str(saved["part"])
+    write_json(ctx["work"] / "clips" / f"{key}.job.json", saved)
     moving = job["analysis"].get("motion", 99)
     if moving < cfg["min_motion"] and not ctx.get("cam"):
         raise NotGameplay(f"the picture barely moves (motion {moving}): a menu, a waiting "
@@ -270,4 +282,5 @@ def make(index, pick, ctx, cfg, memory):
             "hashtags": pick.get("hashtags", []), "score": pick.get("score"), "why": pick.get("why"),
             "picked_by": pick.get("picked_by", "ai"), "start": round(start, 1), "end": round(end, 1),
             "seconds": round(end - start, 1), "sync": round(job["sync"], 2),
-            "job": str(ctx["work"] / "clips" / f"{int(start * 10)}_{int(end * 10)}.job.json")}
+            "seen": pick.get("seen"),
+            "job": str(ctx["work"] / "clips" / f"{key}.job.json")}

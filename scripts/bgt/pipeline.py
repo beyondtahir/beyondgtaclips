@@ -4,7 +4,7 @@ import datetime
 import hashlib
 from pathlib import Path
 
-from . import discover, highlights, listen, media, produce, settings
+from . import brains, discover, highlights, listen, media, produce, settings, story
 from .common import (CACHE, DATA, Problem, Stopwatch, clock, human, parse_clock, probe, read_json,
                      say, slug, tag, write_json)
 
@@ -86,19 +86,26 @@ def process(url, opts, cfg):
     memory = read_json(work / "cam.json", {}) or {}
     ctx = {"url": url, "args": args, "audio": audio, "work": work, "outdir": outdir, "live": live,
            "language": cfg["language"], "fast": opts.fast, "cam": opts.cam_box,
-           "spike_db": spike_db, "creator": meta["name"], "topic": topic}
-    made = []
+           "spike_db": spike_db, "creator": meta["name"], "topic": topic,
+           "brain": opts.brain_resolved, "model": opts.model, "brain_cmd": opts.brain_cmd}
+    made, waiting = [], []
     with watch.lap("make clips"):
         for pick in picks:                      # best first; the rest are backups
-            if len(made) >= cfg["clips"]:
+            if len(made) + len(waiting) >= cfg["clips"]:
                 break
             try:
                 made.append(produce.make(len(made) + 1, pick, ctx, cfg, memory))
+            except brains.NeedAgent as need:          # agent mode: collect, ask all at once
+                waiting.extend(need.waiting)
+            except story.Drop as exc:
+                say(f"  skipped: {exc}; trying the next moment", "warn")
             except produce.NotGameplay as exc:
                 say(f"  skipped: {exc}; trying the next moment", "warn")
             except Exception as exc:  # noqa: BLE001 - one bad clip must not stop the rest
                 say(f"  clip failed: {str(exc)[:300]}; trying the next moment", "bad")
     write_json(work / "cam.json", memory)
+    if waiting:
+        raise brains.NeedAgent(waiting)
 
     summary = (f"{human(hi - lo)} of stream -> {len(made)} clip(s) in {human(watch.total())} ("
                + ", ".join(f"{k} {human(v)}" for k, v in watch.parts.items()) + ")")

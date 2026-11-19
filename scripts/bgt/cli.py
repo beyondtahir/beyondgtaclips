@@ -275,9 +275,11 @@ def main(argv):
             print(f"  check images: {r['outdir'] / 'checks'}")
         if waiting:
             folders = sorted({str(q.parent) for q, _ in waiting})
-            print("\nAGENT MODE: you (the assistant) pick the moments. Instructions are in:")
+            print("\nAGENT MODE: you (the assistant) do this step yourself. Instructions are in:")
             for f in folders:
-                print(f"  {f}/AGENT_TASK.md")
+                task = "STORY_TASK.md" if any(q.name.endswith(".story.prompt.txt") for q, _ in waiting
+                                              if str(q.parent) == f) else "AGENT_TASK.md"
+                print(f"  {f}/{task}")
             print("Answer every prompt file, then run the SAME command again.\n")
             for q, a in waiting:
                 print(f"  {q}\n    -> {a}")

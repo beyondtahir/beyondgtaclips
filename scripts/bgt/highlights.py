@@ -51,14 +51,18 @@ mostly [STATIC SCREEN].
 
 Pick at most <<K>> moments from this part. Each moment must:
   - <<LENGTH_RULE>>
-  - start just before its hook, never on filler ("uh", "anyway", "so yeah", "okay so")
+  - be the WHOLE scene a stranger needs: the streamer reacts AFTER seeing something, so \
+start 3-10 s BEFORE the unexpected thing happens on screen (the trigger), keep the build, \
+and end 1-3 s after the reaction or punchline peaks. Never stop before the payoff line, \
+never keep talking about something else after it.
+  - start on action or a line that sets up the scene, never on filler ("uh", "anyway", "so yeah")
   - make sense with zero context and pay off before it ends
   - be <<MIN>>-<<MAX>> seconds long, lie inside <<LO>>-<<HI>>, and not overlap another pick
 Skip sponsor reads, donations, subs, menus, loading screens, silence, and anything whose \
 payoff falls outside this part. An empty list [] is a fine answer when nothing is strong.
 
 Reply with a JSON array and nothing else (no prose, no markdown fence). Example shape:
-[{"start": 1204.0, "end": 1239.5, "type": "funny", "style": "hookcard",
+[{"start": 1204.0, "end": 1239.5, "trigger": 1209.0, "payoff": 1236.8, "type": "funny", "style": "hookcard",
   "hook": "First in his bloodline to witness an NPC road rage fight in *GTA 6* and pull out his phone to record it 😭",
   "alt_hooks": ["...", "..."], "title": "NPC ROAD RAGE", "headline": "Speed films an NPC road rage fight",
   "caption": "...", "hashtags": ["#gta6", "..."], "score": 72, "why": "..."}]
@@ -74,6 +78,8 @@ invent backstory, relationships, feelings or events that are not in it ("he trus
 someone else (in GTA 6 the player is often Lucia, a woman, or Jason), so never mix up the \
 streamer and the character, or their he/she.
 alt_hooks: two different hooks for A/B testing (a question, a bold claim), same rules.
+trigger: the second the unexpected thing happens (before the streamer reacts to it).
+payoff: the second the punchline or the biggest reaction line ENDS.
 title: 2-5 punchy words for an on-screen sticker, CAPITALS.
 headline: a news-style line, 4-9 words, for the breaking-news look.
 style: the edit that fits best:
@@ -188,6 +194,13 @@ def parse_reply(raw):
     return data if isinstance(data, list) else None
 
 
+def _num(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def _text(value, limit):
     return re.sub(r"\s+", " ", str(value or "")).strip()[:limit]
 
@@ -264,10 +277,23 @@ def tidy(pick, words, cfg, creator=None):
         end = last["e"] + 0.55
     else:
         start, end = s, e
+    trig, pay = _num(pick.get("trigger")), _num(pick.get("payoff"))
+    if trig is not None and s - 15 <= trig <= e:
+        start = min(start, max(0.0, trig - 4.0))          # show what they react to
+    if pay is not None and s <= pay <= e + 15:
+        after = [w for w in words if pay - 0.5 <= w["s"] <= pay + 2.0 and w["w"].endswith((".", "!", "?"))]
+        end = max(end, (after[0]["e"] if after else pay) + 1.2)  # never cut the punchline
     if end - start < lo_len:
         end = start + lo_len
-    end = min(end, start + hi_len)
+    if end - start > hi_len:                                # too long: drop setup, keep the payoff
+        keep_from = (trig - 2.0) if trig is not None else start
+        start = min(max(start, end - hi_len), max(start, keep_from))
+        end = min(end, start + hi_len)
     out = {"start": round(start, 2), "end": round(end, 2)}
+    if trig is not None:
+        out["trigger"] = round(trig, 2)
+    if pay is not None:
+        out["payoff"] = round(pay, 2)
     try:
         out["score"] = max(1, min(100, int(float(pick.get("score", 50)))))
     except (TypeError, ValueError):

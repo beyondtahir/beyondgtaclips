@@ -70,8 +70,13 @@ What it does for each stream:
 1. looks at the whole stream (YouTube preview frames) and finds where the game is played
 2. downloads the audio only, measures loudness and chat, transcribes the 10 hottest gameplay parts
 3. the AI picks the best moments (funny, shocking, chaos, discoveries) with a hook for each
-4. downloads only those seconds of video, checks they are real gameplay (a menu or just
-   talking is swapped for a backup moment), and renders each chosen style in 9:16
+4. downloads only those seconds of video (with extra seconds on both sides) and runs the
+   **story check**: the AI looks at the frames and the words and re-cuts the moment so it
+   tells one whole story: start 3-10 s before the unexpected thing happens, end right after
+   the reaction. It rewrites a hook that claims something not on screen, and drops a moment
+   with nothing worth posting (a backup takes its place)
+5. checks the clip is real gameplay (a menu or just talking is swapped for a backup moment)
+   and renders each chosen style in 9:16
 Other options: `--length long` (60-90 s story clips), `--focus "police chases"`,
 `--section 1:30:00-3:00:00` (only that part), `--brain agent|none` (see section 3).
 
@@ -127,7 +132,10 @@ Every style keeps text out of the TikTok/Reels button zones and works in Instagr
 
 **Agent mode.** The command stops with exit code 3 and writes `AGENT_TASK.md` next to the
 prompt files. Read each `.prompt.txt`, follow it, write only the JSON array to its
-`.answer.json`, then run the exact same command again. It continues and makes the clips.
+`.answer.json`, then run the exact same command again. It stops once more for the story
+check (`STORY_TASK.md`): open the contact-sheet images each `.story.prompt.txt` lists, look
+at them, write only the JSON object to its `.story.answer.json`, and run the same command
+again. It continues and makes the clips.
 
 If the AI finds too few strong moments, the loudest moments fill the gap: a stream never
 ends with zero clips.

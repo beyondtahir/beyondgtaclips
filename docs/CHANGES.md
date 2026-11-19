@@ -58,6 +58,13 @@ Built by Claude on 19 Nov 2026 from MiniMax's investigation (`OVERVIEW.md`, `DEV
   (no invented backstory), names the streamer, keeps the streamer and the character (Lucia/Jason)
   apart, 8-16 words. Dashes in hooks, titles and captions become commas. The creator hashtag is
   built from the channel name and misspelt copies are dropped (`#kaicentlive` -> `#kaicenat`).
+- Story check (2026-11-20, after clips that cut off the punchline or showed no gun): the picker
+  marks the trigger and the payoff and cuts the whole scene (3-10 s before the trigger to just
+  after the reaction). Each moment is downloaded with extra seconds, then the AI looks at contact
+  sheets of its frames plus the words, re-cuts it, rewrites a hook that claims something not on
+  screen, or drops it for a backup (`scripts/bgt/story.py`, setting `story_check`). Claude reads
+  the images, Codex gets them with `-i`, agent mode via `STORY_TASK.md`, other brains judge
+  from the words only, `--brain none` skips it.
 - Punch-in zooms on volume spikes, synthesised whoosh + pop, cinematic push-in and fades,
   platform safe zones, creator credit in every template.
 - `--template all` renders every style per clip; `remake` re-renders with a new hook, title,
