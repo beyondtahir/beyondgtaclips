@@ -2,41 +2,32 @@
   <img src="assets/brand/logo-wide.jpg" alt="Beyond GTA Clips" width="720">
 </p>
 
-<h3 align="center">Turn 10-hour GTA 6 streams into viral reels. Automatically. For free.</h3>
+<h2 align="center">Streamers play GTA 6 for 10 hours.<br>You post the best 30 seconds and get paid per view.</h2>
+
+<p align="center">
+  <b>Beyond GTA Clips</b> watches the stream for you, finds the moments that go viral<br>
+  and hands you finished 9:16 reels. Free. Runs on your computer. Works in Claude and ChatGPT.
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GTA%206-ready-ff2d78?style=for-the-badge" alt="GTA 6 ready">
-  <img src="https://img.shields.io/badge/price-free-00c2a8?style=for-the-badge" alt="Free">
+  <img src="https://img.shields.io/badge/price-%240%20forever-00c2a8?style=for-the-badge" alt="Free">
   <img src="https://img.shields.io/badge/9%3A16-Reels%20%C2%B7%20TikTok%20%C2%B7%20Shorts-ff8a00?style=for-the-badge" alt="9:16 Reels TikTok Shorts">
   <br>
   <img src="https://img.shields.io/badge/works%20in-Claude-d97757?style=flat-square" alt="Works in Claude">
   <img src="https://img.shields.io/badge/works%20in-ChatGPT%20(Codex)-10a37f?style=flat-square" alt="Works in ChatGPT Codex">
   <img src="https://img.shields.io/badge/no-API%20keys-6f42c1?style=flat-square" alt="No API keys">
-  <img src="https://img.shields.io/badge/runs-on%20your%20computer-555?style=flat-square" alt="Runs locally">
+  <img src="https://img.shields.io/badge/no-subscription-555?style=flat-square" alt="No subscription">
   <img src="https://img.shields.io/badge/Mac%20%7C%20Windows-supported-333?style=flat-square" alt="Mac and Windows">
 </p>
 
 <p align="center">
-  <img src="assets/brand/hero.jpg" alt="Long streams in, viral clips out" width="100%">
+  <a href="#-quick-start"><b>🚀 Quick start</b></a> ·
+  <a href="#-who-pays-for-clips"><b>💰 Who pays for clips</b></a> ·
+  <a href="#-five-viral-styles"><b>🎨 Styles</b></a> ·
+  <a href="#-how-it-works"><b>🛠️ How it works</b></a> ·
+  <a href="GUIDE.md"><b>📖 Guide</b></a>
 </p>
-
----
-
-## 🔥 Right now, someone is getting paid for a 30-second GTA 6 clip
-
-GTA 6 is out, and the biggest streamers are live for **10 hours a day**.
-Nobody watches 10 hours. Everybody watches **the 30 seconds where something crazy happens**:
-the alligator attack, the police chase, the NPC meltdown, the streamer losing it.
-
-The pages that post those 30 seconds first are getting **millions of views**. Brands and
-streamers **pay clippers per view** to do exactly that.
-
-The problem: finding those 30 seconds means watching hours of footage, cutting, cropping to
-vertical, writing captions, adding text... for every single clip.
-
-**Beyond GTA Clips does all of it for you.** You answer 3 questions. Your AI assistant finds
-the most viewed streams, watches them, picks the moments that go viral and hands you
-finished, ready-to-post reels.
 
 <p align="center">
   <img src="assets/brand/demo.gif" alt="Three real reels made by Beyond GTA Clips" width="760">
@@ -44,24 +35,94 @@ finished, ready-to-post reels.
   <sub>Real reels, made automatically from one GTA 6 launch stream. Left to right: Hook card, Stack, Bubble.</sub>
 </p>
 
+> [!TIP]
+> **⭐ Star this repo** so you can find it again when the next big stream drops.
+> It takes one click and it helps other clippers find a free tool.
+
 ---
 
-## ⚡ What it does
+## 🔥 The clipping gold rush is happening right now
 
-| Step | What happens |
+**MrBeast pays people to clip his videos.** So do IShowSpeed, Kai Cenat and Kick.
+Brands put money into a pot, you post short clips on your own TikTok, Reels or Shorts,
+and you get paid for every 1,000 views your clips get.
+
+GTA 6 just launched. The biggest streamers are live for **10 hours a day**, and millions of people
+want **the 30 seconds where something crazy happens**: the alligator attack, the police chase,
+the NPC meltdown, the streamer losing it.
+
+The clippers who post those 30 seconds **first** get the views. The hard part was always the
+same: watching hours of footage, finding the moment, cutting it, making it vertical, writing
+captions... for every single clip.
+
+**That part is now automatic.** You answer 3 questions. Your AI assistant finds the most viewed
+streams, watches them, picks the moments that go viral and hands you finished reels with a hook,
+captions and a ready-to-paste post.
+
+<p align="center">
+  <img src="assets/brand/hero.jpg" alt="Long streams in, viral clips out" width="100%">
+</p>
+
+---
+
+## 💰 Who pays for clips
+
+<p align="center">
+  <img src="assets/brand/make-money.jpg" alt="Make money clipping" width="85%">
+</p>
+
+Real programs and real rates, checked in **November 2026**. Rates change with every campaign,
+so always check the live campaign page before you post.
+
+| Who pays | How it works | Typical pay |
+|---|---|---|
+| 🟣 **Content Rewards** (paid out through **Whop**) | The biggest clipping marketplace. Hundreds of campaigns from streamers and brands, including **IShowSpeed** and **Kai Cenat**. Join a campaign, post, submit your link. | About **$1 per 1,000 views** (median), usually capped per clip [¹](#sources) |
+| 🐐 **MrBeast** (his own platform, **Vyro**) | Paid rounds for new MrBeast and MrBeast Gaming videos, plus sponsor rounds. 18+, clips must be approved and pass 5,000 views. | **$1-2.50 per 1,000 views**, up to **$1,000 per clip** [²](#sources) |
+| 🟢 **Kick streamers** | Kick funds clipping campaigns through agencies, and some Kick streamers run their own programs. | One streamer paid **$1.4M to 303 clippers in 5 weeks** [³](#sources) |
+| ▶️ **YouTube Shorts** | Grow a GTA 6 clip channel and join the YouTube Partner Program. You keep **45%** of your share of the Shorts ad pool. | A few cents per 1,000 views, so it adds up only at big volume [⁴](#sources) |
+| 🎵 **TikTok Creator Rewards** | Pays for qualified views on original videos **over 1 minute**. Needs 10K followers and 100K views in 30 days. Use **long mode**. | Depends on country and watch time [⁵](#sources) |
+| 🤝 **Sell it as a service** | Streamers pay clippers to grow their channel. Show them reels you made from their stream. | You set the price |
+
+### 🧮 What the views are worth
+
+At the typical **$1 per 1,000 views** campaign rate:
+
+| Your clip gets | You earn |
 |---|---|
-| 🔎 **Finds the streams** | Searches YouTube for the **most viewed** GTA 6 streams from the last 24 hours, 48 hours or week, skips re-uploads and compilations, and checks the language. |
-| 👀 **Watches the whole stream** | Looks at the entire stream in seconds and skips the boring parts: waiting rooms, menus, just chatting. Only real gameplay. |
-| 👂 **Listens for the hype** | Finds the moments where the streamer screams, laughs and chat explodes. |
-| 🧠 **Picks the viral moments** | Your AI chooses the funniest, most shocking moments and writes a scroll-stopping hook for each one. |
-| ✂️ **Cuts only what it needs** | Downloads only those seconds of video, not the whole 10 hours. |
-| 🎬 **Edits like a pro** | 9:16 vertical, hook text, word-by-word captions, zooms, sound effects, in 5 viral styles. |
-| ✅ **Checks its own work** | Looks at every reel and fixes any hook that doesn't match the picture. |
-| 📋 **Writes your post** | Caption, hashtags, 2 extra hooks to A/B test and a trending-sound tip for every reel. |
+| 50,000 views | **$50** |
+| 250,000 views | **$250** |
+| 1,000,000 views | **$1,000** |
+| 10 clips × 100,000 views | **$1,000** |
+
+> [!WARNING]
+> **Real talk.** These are typical market rates, not promises. Many campaigns only pay for
+> **approved** clips with **verified** views, set a minimum view count, cap the pay per clip,
+> and take a platform fee. Budgets can run out in a day. Only clip creators who allow it, and
+> follow each campaign's rules (hashtags, disclosure, length).
+
+### 🧠 Tips that make clips go viral
+- **Post fast.** The first clips of a new moment get the views. This tool exists for speed.
+- **The hook decides everything.** People decide in one second. Every reel comes with a hook plus 2 extra hooks to A/B test.
+- **Add a trending sound** inside the app at low volume (YouTube: music lowers the Shorts payout pool, so use it on TikTok and Reels).
+- **Post daily, 3-5 reels,** on every platform the campaign allows.
+- **Pick streamers with clipping programs** and follow their campaign rules exactly.
 
 ---
 
-## 🛠️ How it works (step by step)
+## ⚡ Doing it by hand vs. Beyond GTA Clips
+
+| | By hand | Beyond GTA Clips |
+|---|---|---|
+| Find the biggest streams | Scroll YouTube for an hour | Most viewed from the last 24h / 48h / week, ranked for you |
+| Find the moment | Watch 10 hours | Skips menus and waiting, listens for screams, laughs and chat spikes |
+| Cut and crop to 9:16 | 20 minutes per clip | Automatic, with the facecam handled |
+| Hook + captions | Type them yourself | Word-by-word captions and a scroll-stopping hook |
+| Caption + hashtags | Write them yourself | `POSTING.md` with caption, hashtags and 2 A/B hooks |
+| Cost | Your whole day | **$0**, no API keys, no subscription |
+
+---
+
+## 🛠️ How it works
 
 ```mermaid
 flowchart LR
@@ -72,7 +133,7 @@ flowchart LR
     E --> F["🧠 AI picks the<br/>viral moments"]
     F --> G["✂️ Cut only those<br/>seconds"]
     G --> H["🎬 Edit 9:16 reels<br/>hook · captions · zooms"]
-    H --> I["📱 Post & get views"]
+    H --> I["📱 Post & get paid"]
 ```
 
 1. **You say** *"Make GTA 6 clips"* to Claude or ChatGPT.
@@ -83,7 +144,17 @@ flowchart LR
 3. **It shows you the most viewed streams** with views and age. Pick some, or say *"take the top ones"*.
 4. **It does the work** (about 10-20 minutes per stream) and tells you what it's doing.
 5. **You get a folder of finished reels** plus a `POSTING.md` with the caption and hashtags for each one.
-6. **You post them.** That's it.
+6. **You post them** to the campaign and collect.
+
+| Step | What happens behind the scenes |
+|---|---|
+| 🔎 **Finds the streams** | Searches YouTube for the most viewed GTA 6 streams in your time window, skips re-uploads and compilations, checks the language. |
+| 👀 **Watches the whole stream** | Looks at the entire stream in seconds and skips waiting rooms, menus and just chatting. Only real gameplay. |
+| 👂 **Listens for the hype** | Finds the moments where the streamer screams, laughs and chat explodes. |
+| 🧠 **Picks the viral moments** | Your AI chooses the funniest, most shocking moments and writes a hook for each. |
+| ✂️ **Cuts only what it needs** | Downloads only those seconds of video, not the whole 10 hours. |
+| 🎬 **Edits like a pro** | 9:16, hook text, word-by-word captions, zooms and sound effects in 5 styles. |
+| ✅ **Checks its own work** | Looks at every reel and fixes any hook that doesn't match the picture. |
 
 ---
 
@@ -106,49 +177,6 @@ right in Instagram's 4:5 feed crop.
 
 ---
 
-## 💰 How people make money with clips
-
-<p align="center">
-  <img src="assets/brand/make-money.jpg" alt="Make money clipping" width="85%">
-</p>
-
-There are four common ways. Beyond Tahir's tool makes the clips; the earning is up to you.
-
-**1. Clipping campaigns (paid per view).**
-Streamers and brands post campaigns on clipping marketplaces such as Whop's Content Rewards
-and pay for every 1,000 views your approved clips get. In November 2026 the typical
-(median) rate was **about $1 per 1,000 views**, with campaigns ranging from roughly
-**$0.20 to $6**; gaming campaigns tend to sit on the higher side.
-A clip that reaches 500,000 views on a $1 campaign is about **$500**.
-([Content Rewards](https://contentrewards.com/articles/how-much-do-clippers-make),
-[OpenClip](https://openclip.app/guides/make-money-clipping-videos))
-
-**2. TikTok Creator Rewards.**
-TikTok pays for qualified views on original videos **longer than 1 minute** (needs 10K
-followers and 100K views in 30 days, in supported countries). Use **long mode** to make
-60-90 second story clips that qualify.
-([ShortSync](https://www.shortsync.app/resources/tiktok-creator-rewards-program-2026))
-
-**3. YouTube Shorts & Facebook Reels.**
-Grow a GTA 6 clip page and earn from the platforms' ad revenue programs once you qualify
-(YouTube: Partner Program).
-
-**4. Sell clipping as a service.**
-Streamers pay clippers to grow their channels. Show them reels you made from their streams.
-
-> ⚠️ Real talk: earnings depend on your clips, your page and the campaign rules. These are
-> typical market rates, not promises. Only clip creators who allow it, and follow each
-> campaign's rules (most pay only for approved clips and verified views).
-
-**Tips that make clips go viral**
-- Post **fast**: the first clips of a new moment get the views.
-- Use the **hook text**: it decides whether people stop scrolling.
-- Add a **trending sound** inside the app at low volume.
-- Post **daily**, 3-5 reels. Test the 2 extra hooks from `POSTING.md`.
-- Pick the streamers with clipping programs and post to every platform.
-
----
-
 ## 🚀 Quick start
 
 **You need:** a Mac or Windows PC, about 3 GB free, and **Claude** (Claude Code / Claude
@@ -168,16 +196,16 @@ winget install Gyan.FFmpeg
 winget install DenoLand.Deno
 ```
 
-**2. Add the skill** by putting this folder here:
-
-| | Mac | Windows |
-|---|---|---|
-| **Claude** | `~/.claude/skills/beyondgtaclips` | `C:\Users\<you>\.claude\skills\beyondgtaclips` |
-| **ChatGPT (Codex)** | `~/.codex/skills/beyondgtaclips` | `C:\Users\<you>\.codex\skills\beyondgtaclips` |
+**2. Add the skill:**
 
 ```bash
+# Claude
 git clone https://github.com/beyondtahir/beyondgtaclips ~/.claude/skills/beyondgtaclips
+# ChatGPT (Codex)
+git clone https://github.com/beyondtahir/beyondgtaclips ~/.codex/skills/beyondgtaclips
 ```
+
+On Windows the folders are `C:\Users\<you>\.claude\skills\` and `C:\Users\<you>\.codex\skills\`.
 
 **3. Say** *"set up beyondgtaclips"* (once, about 5 minutes), then *"make GTA 6 clips"*. 🎉
 
@@ -208,7 +236,16 @@ ChatGPT will ask for permission to use the internet and save files: choose **All
 <summary><b>Is it really free?</b></summary>
 
 Yes. Everything runs on your own computer: speech recognition, editing and rendering.
-No API keys, no credits. The AI that picks the moments is the Claude or ChatGPT you already use.
+No API keys, no credits, no subscription. The AI that picks the moments is the Claude or
+ChatGPT you already use.
+</details>
+
+<details>
+<summary><b>Will I definitely make money?</b></summary>
+
+No tool can promise that. The money comes from views, and views come from posting good clips
+fast and often. This tool removes the slow part (finding and editing) so you can post more,
+faster. Read each campaign's rules before you post.
 </details>
 
 <details>
@@ -262,11 +299,38 @@ Assistant instructions: [SKILL.md](SKILL.md) · Change log: [docs/CHANGES.md](do
 - Only clip creators who allow clipping. Many big streamers run paid clipping programs.
 - Always credit the streamer (every reel and caption does this for you).
 - Beyond GTA Clips is an independent tool. It is not affiliated with Rockstar Games, Take-Two,
-  YouTube, TikTok, Instagram or any streamer. GTA and Grand Theft Auto are trademarks of
-  their owners.
+  MrBeast, Vyro, Whop, Content Rewards, Kick, YouTube, TikTok, Instagram or any streamer.
+  GTA and Grand Theft Auto are trademarks of their owners.
+
+---
+
+## ⭐ Like it? Star it.
+
+If Beyond GTA Clips saved you a day of editing, **give it a star** at the top of this page.
+Stars help other clippers find a free tool, and they tell us to keep building
+(live-stream clipping and montage mode are next).
+
+Made a clip that went viral with it? Open an issue and show us. 🎉
 
 <p align="center">
   <img src="assets/brand/icon.png" width="64" alt=""><br>
   <b>Beyond GTA Clips</b> · made by <b>Beyond Tahir</b><br>
   <sub>Long streams in. Viral clips out.</sub>
 </p>
+
+---
+
+<a id="sources"></a>
+<sub>
+
+**Sources** (checked November 2026; rates change with every campaign):
+¹ [Content Rewards: how much clippers make](https://contentrewards.com/articles/how-much-do-clippers-make) ·
+[OpenClip: Whop clipping guide](https://openclip.app/guides/whop-clipping-guide) ·
+[Clyper: streamers who pay clippers](https://www.clyper.io/clipping-programs) &nbsp;
+² [Clyper: MrBeast clipping program on Vyro](https://www.clyper.io/clipping-programs/mrbeast) ·
+[Complex, citing Bloomberg (Nov 2025)](https://www.complex.com/pop-culture/a/treyalston/mrbeast-content-pay-clippers-50-100-thousand) &nbsp;
+³ [Clyper: Kick and N3on, citing Business Insider (Apr 2026)](https://www.clyper.io/clipping-programs) &nbsp;
+⁴ [vidIQ: YouTube Shorts monetization 2026](https://vidiq.com/blog/post/youtube-shorts-monetization/) &nbsp;
+⁵ [ShortSync: TikTok Creator Rewards 2026](https://www.shortsync.app/resources/tiktok-creator-rewards-program-2026)
+
+</sub>
