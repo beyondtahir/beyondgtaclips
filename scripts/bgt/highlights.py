@@ -49,6 +49,13 @@ streamer reacting to it. Never pick waiting for the game, menus, settings, loadi
 reading chat, donations or talking about plans, and never pick a moment whose lines are \
 mostly [STATIC SCREEN].
 
+Rank moments by how viral they are. FIRST the streamer's reaction: how excited, shocked, \
+scared or hysterical they get, how they behave (screaming, laughing fits, jumping up, \
+speechless, losing it), and [VOLUME]/[CHAT] spikes show where it happens. THEN the action \
+on screen that caused it (the surprise, the chaos, the discovery). A huge reaction to a clear \
+on-screen event beats everything. Swearing alone is never a reason to pick a moment; a great \
+moment with swearing in it is fine (the page is 18+).
+
 Pick at most <<K>> moments from this part. Each moment must:
   - <<LENGTH_RULE>>
   - be the WHOLE scene a stranger needs: the streamer reacts AFTER seeing something, so \

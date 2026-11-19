@@ -31,6 +31,7 @@ DEFAULTS = {
 
     # listening
     "scan_model": "tiny",            # Whisper model for the whole stream (fast)
+    "clean_captions": "slurs",       # on-screen text only: "slurs" (starred, platforms flag them) | "all" (swears too) | "off"
     "story_check": True,             # look at each moment's frames, fix the cut and hook
     "caption_model": "base",         # Whisper model for each clip's captions (accurate)
     "language": None,                # None = detect per block, or e.g. "en", "hi", "es"

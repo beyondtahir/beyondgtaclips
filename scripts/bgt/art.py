@@ -358,15 +358,17 @@ SLURS = re.compile(r"^(nigg(a|er|ah|uh)s?z?|niggaz|fag(got)?s?|retard(ed|s)?|cun
 SWEARS = re.compile(r"^(mother)?f+u+c*k+\w*|^(bull)?shit(s|ty|ting|ted|ter)?$|^bitch(es|y|ing)?$|^dick(s|head)?$|^puss(y|ies)$|^ass(hole)?s?$", re.I)
 
 
-def mask(word):
-    """Platform-safe captions: slurs fully starred (n****), swears softened (f**k, sh*t)."""
+def mask(word, level="slurs"):
+    """On-screen caption text only (the audio is never touched). level: "off" = as said,
+    "slurs" = slurs starred (n****) because TikTok/Reels scan on-screen text for them,
+    "all" = swears softened too (f**k)."""
     core = re.sub(r"^\W+|\W+$", "", word)
-    if not core:
+    if not core or level == "off":
         return word
     lead, tail = word[:word.find(core)], word[word.find(core) + len(core):]
     if SLURS.match(core):
         return lead + core[0] + "*" * (len(core) - 1) + tail
-    if SWEARS.match(core) and len(core) > 2:
+    if level == "all" and SWEARS.match(core) and len(core) > 2:
         return lead + core[0] + "*" * (len(core) - 2) + core[-1] + tail
     return word
 
@@ -383,8 +385,6 @@ def captions(words, length, style, folder, width):
     blank = folder / "cap_blank.png"
     Image.new("RGBA", (width, band), (0, 0, 0, 0)).save(blank)
     words = [w for w in words if w["e"] > 0 and w["s"] < length and _clean(w["w"])]
-    if style.get("clean", True):
-        words = [dict(w, w=mask(w["w"])) for w in words]
     latin = [w for w in words if not any(_foreign(c) for c in w["w"])]
     if words and len(latin) >= 0.7 * len(words):
         # mostly Latin speech: stray CJK/other characters are Whisper mishearing, drop them

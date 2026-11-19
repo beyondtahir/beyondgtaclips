@@ -49,7 +49,8 @@ of every moment before it cuts:
 
 - 🎬 **The whole scene.** Each clip starts 3-10 seconds before the crazy thing happens and ends right after the streamer's reaction.
 - 🎯 **Hooks that match the picture.** If the hook says something the video doesn't show, it gets rewritten. If nothing worth posting is on screen, a backup moment takes its place.
-- 🧼 **Clean captions.** Slurs and swear words are starred out in the on-screen text (f\*\*k). The streamer's voice is never changed.
+- 🔥 **Reaction first.** It ranks moments by how hard the streamer loses it (screaming, laughing, jumping up), then makes sure you see what caused it.
+- 💬 **Real captions.** What the streamer says stays as it is. Only slurs are starred out in the on-screen text (TikTok and Reels flag them and bury the post). The audio is never changed.
 
 <p align="center">
   <img src="assets/brand/story-check.jpg" alt="Before and after the story check: a hook about a gun that never appears becomes the real gang-pick scene, and a fight clip now includes its punchline" width="100%">
@@ -164,7 +165,7 @@ At the typical **$1 per 1,000 views** campaign rate:
 | 🧠 **Picks the viral moments** | Your AI chooses the funniest, most shocking moments and writes a hook for each. |
 | ✂️ **Cuts only what it needs** | Downloads only those seconds of video (plus a little extra on each side), not the whole 10 hours. |
 | 🎞️ **Checks the story** | Looks at the frames and re-cuts each moment so it shows the whole scene, from just before the surprise to the end of the reaction. Rewrites a hook that doesn't match the picture. |
-| 🎬 **Edits like a pro** | 9:16, hook text, word-by-word captions (swears starred out), zooms and sound effects in 5 styles. |
+| 🎬 **Edits like a pro** | 9:16, hook text, word-by-word captions, zooms and sound effects in 5 styles. |
 | ✅ **Checks its own work** | Looks at every finished reel before handing it to you. |
 
 ---

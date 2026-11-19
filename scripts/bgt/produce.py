@@ -150,7 +150,9 @@ def render(name, job, cfg, dest):
     info, length = job["info"], job["length"]
     fps = min(60.0, info["fps"] or 30.0)
     accent = cfg.get("accent") or templates.ACCENT[name]
-    ctx = {"info": info, "pick": job["pick"], "accent": accent, "cfg": cfg, "words": job["words"],
+    level = str(cfg.get("clean_captions", "slurs")).lower()
+    words = [dict(w, w=art.mask(w["w"], level)) for w in job["words"]]
+    ctx = {"info": info, "pick": job["pick"], "accent": accent, "cfg": cfg, "words": words,
            "cam": job["analysis"].get("cam"), "face": job["analysis"].get("face"),
            "talking_graph": job["analysis"].get("talking_graph"),
            "punches": job["punches"] if name in ("stack", "bubble") else [],

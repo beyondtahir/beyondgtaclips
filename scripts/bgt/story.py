@@ -35,7 +35,9 @@ Why it was picked: <<WHY>>
 Your job: make the clip tell ONE complete story a stranger understands with zero context.
 1. Find the scene: the unexpected, exciting or shocking thing that happens on screen (the \
 trigger) and the streamer's reaction or punchline to it (the payoff). Streamers react \
-AFTER they see something, so the trigger comes before the loud reaction.
+AFTER they see something, so the trigger comes before the loud reaction. The reaction \
+matters most: if a facecam is visible in the frames, watch the streamer's face and body \
+(excitement, shock, laughing, jumping up) and keep the cut until the reaction has peaked.
 2. Cut it: start 3-10 s before the trigger, keep the build-up, end 1-3 s after the payoff. \
 Never end mid-sentence or before the payoff. Never keep footage about something else. \
 Length <<MIN>>-<<MAX>> s, inside 0-<<DUR>>.
