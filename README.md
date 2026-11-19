@@ -125,9 +125,7 @@ At the typical **$1 per 1,000 views** campaign rate:
 ## 🛠️ How it works
 
 <p align="center">
-  <b>💬 You ask</b> &nbsp;➜&nbsp; <b>❓ 3 questions</b> &nbsp;➜&nbsp; <b>🔎 Find streams</b> &nbsp;➜&nbsp; <b>👀 Watch</b> &nbsp;➜&nbsp; <b>👂 Listen</b>
-  <br>
-  ➜&nbsp; <b>🧠 Pick moments</b> &nbsp;➜&nbsp; <b>✂️ Cut</b> &nbsp;➜&nbsp; <b>🎬 Edit 9:16</b> &nbsp;➜&nbsp; <b>📱 Post & get paid</b>
+  <img src="assets/brand/how-it-works.png" alt="How it works: 1 You ask, 2 three questions, 3 find streams, 4 watch, 5 listen, 6 pick moments, 7 cut, 8 edit 9:16, 9 post and get paid" width="100%">
 </p>
 
 1. **You say** *"Make GTA 6 clips"* to Claude or ChatGPT.
