@@ -124,17 +124,11 @@ At the typical **$1 per 1,000 views** campaign rate:
 
 ## 🛠️ How it works
 
-```mermaid
-flowchart LR
-    A["💬 You:<br/>'Make GTA 6 clips'"] --> B["❓ 3 quick questions<br/>how many · how recent · which style"]
-    B --> C["🔎 Find the most<br/>viewed streams"]
-    C --> D["👀 Watch the whole stream<br/>skip menus & waiting"]
-    D --> E["👂 Listen for hype<br/>screams · laughs · chat"]
-    E --> F["🧠 AI picks the<br/>viral moments"]
-    F --> G["✂️ Cut only those<br/>seconds"]
-    G --> H["🎬 Edit 9:16 reels<br/>hook · captions · zooms"]
-    H --> I["📱 Post & get paid"]
-```
+<p align="center">
+  <b>💬 You ask</b> &nbsp;➜&nbsp; <b>❓ 3 questions</b> &nbsp;➜&nbsp; <b>🔎 Find streams</b> &nbsp;➜&nbsp; <b>👀 Watch</b> &nbsp;➜&nbsp; <b>👂 Listen</b>
+  <br>
+  ➜&nbsp; <b>🧠 Pick moments</b> &nbsp;➜&nbsp; <b>✂️ Cut</b> &nbsp;➜&nbsp; <b>🎬 Edit 9:16</b> &nbsp;➜&nbsp; <b>📱 Post & get paid</b>
+</p>
 
 1. **You say** *"Make GTA 6 clips"* to Claude or ChatGPT.
 2. **It asks three questions:**
@@ -311,6 +305,13 @@ Stars help other clippers find a free tool, and they tell us to keep building
 (live-stream clipping and montage mode are next).
 
 Made a clip that went viral with it? Open an issue and show us. 🎉
+
+## 👥 Contributors
+
+| | Who | What |
+|---|---|---|
+| 🎬 | **[Beyond Tahir](https://github.com/beyondtahir)** | Creator: the idea, the five styles, testing on real GTA 6 streams |
+| 🤖 | **[Claude](https://www.anthropic.com/claude)** (Anthropic) | Co-developer: built the engine, the templates, the guide and this page |
 
 <p align="center">
   <img src="assets/brand/icon.png" width="64" alt=""><br>
