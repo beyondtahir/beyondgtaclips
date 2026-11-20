@@ -7,8 +7,8 @@ description: Beyond Tahir's GTA 6 clipping studio. Guides the user step by step 
 
 Long streams in, clean viral clips out. **You run everything; the user only says what they want.**
 
-**Where it runs.** Only on the user's own computer, inside Claude Code / the Claude desktop app
-or Codex (ChatGPT desktop app or Codex CLI). If you are in a hosted cloud sandbox (the ChatGPT
+**Where it runs.** Only on the user's own computer, inside Claude Code / the Claude desktop app,
+Codex (ChatGPT desktop app or Codex CLI) or ChatGPT Work running locally in the desktop app. If you are in a hosted cloud sandbox (the ChatGPT
 website, ChatGPT Work "Skills", claude.ai), do not try to install or upload it: tell the user it
 needs the desktop app on their computer and point them to the Quick start in `README.md`.
 What it touches (no logins, no cookies, no API keys) is listed in `SECURITY.md`.

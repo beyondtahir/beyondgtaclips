@@ -197,7 +197,8 @@ right in Instagram's 4:5 feed crop.
 |---|---|
 | ✅ **Claude Code** or the **Claude desktop app** (Code tab) on Mac or Windows | works |
 | ✅ **ChatGPT desktop app with Codex**, or the **Codex CLI**, on Mac or Windows | works |
-| ❌ **chatgpt.com**, **ChatGPT Work "Skills" upload**, **claude.ai** website | won't work |
+| ✅ **ChatGPT Work in the desktop app**, with the task set to run **on your computer** | works |
+| ❌ **chatgpt.com**, **ChatGPT Work in the cloud** ("Skills" upload), **claude.ai** website | won't work |
 
 The websites run in a cloud sandbox: they can't run the video tools, keep your clips or download
 streams, and ChatGPT's skill upload can reject it ("did not pass the safety scan"). Install it
