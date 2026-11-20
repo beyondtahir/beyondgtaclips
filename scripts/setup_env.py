@@ -22,9 +22,13 @@ MODELS = ENV_DIR / "models"
 DATA = Path(os.environ.get("BEYONDGTACLIPS_HOME") or Path.home() / "BeyondGTAClips")
 HERE = Path(__file__).resolve().parent
 
-PACKAGES = ["faster-whisper", "opencv-python-headless", "pillow", "numpy", "yt-dlp[default]"]
+# Tested versions. Each stays within its major version so an update can't change behaviour
+# unexpectedly; yt-dlp has no ceiling because YouTube changes often and old versions stop working.
+PACKAGES = ["faster-whisper>=1.2,<2", "opencv-python-headless>=4.9,<6", "pillow>=10,<14",
+            "numpy>=1.26,<3", "yt-dlp[default]>=2026.10.26"]
 FACE_MODEL_URL = ("https://github.com/opencv/opencv_zoo/raw/main/models/"
                   "face_detection_yunet/face_detection_yunet_2023mar.onnx")
+FACE_MODEL_SHA256 = "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -57,13 +61,13 @@ def check_tools():
         else:
             bad(f"{tool} not found",
                 hint("brew install ffmpeg", "winget install Gyan.FFmpeg  (then open a new terminal)",
-                     "sudo apt install ffmpeg"))
+                     "your package manager, e.g. apt install ffmpeg"))
             missing = True
     if shutil.which("deno") or shutil.which("node") or shutil.which("bun"):
         good("JavaScript runtime (YouTube downloads need one)")
     else:
         bad("no deno or node (YouTube downloads need one)",
-            hint("brew install deno", "winget install DenoLand.Deno", "curl -fsSL https://deno.land/install.sh | sh"))
+            hint("brew install deno", "winget install DenoLand.Deno", "your package manager, or see https://deno.com"))
         missing = True
     brains = [b for b in ("claude", "codex", "kimi", "gemini", "cursor-agent", "opencode") if shutil.which(b)]
     if brains:
@@ -121,13 +125,28 @@ def download_models():
     subprocess.run([str(VENV_PY), "-c", code, str(MODELS / "whisper")], check=True)
     good("Whisper models (tiny = scanning the stream, base = captions)")
     face = MODELS / "face_yunet.onnx"
-    if not face.exists() or face.stat().st_size < 10000:
+    if not _sha_ok(face):
         try:
-            urllib.request.urlretrieve(FACE_MODEL_URL, face)
+            tmp = face.with_suffix(".part")
+            urllib.request.urlretrieve(FACE_MODEL_URL, tmp)
+            if _sha_ok(tmp):
+                tmp.replace(face)
+            else:
+                tmp.unlink(missing_ok=True)
+                print("  [note] the face model did not match its checksum, so it was not used; "
+                      "a simpler face finder will be used")
         except Exception as exc:  # noqa: BLE001
             print(f"  [note] face model download failed ({exc}); a simpler face finder will be used")
-    if face.exists() and face.stat().st_size > 10000:
-        good("face finder (OpenCV YuNet)")
+    if _sha_ok(face):
+        good("face finder (OpenCV YuNet, checksum verified)")
+
+
+def _sha_ok(path):
+    """True when the file exists and is exactly the published model."""
+    import hashlib
+    if not path.exists():
+        return False
+    return hashlib.sha256(path.read_bytes()).hexdigest() == FACE_MODEL_SHA256
 
 
 def make_data_dir():

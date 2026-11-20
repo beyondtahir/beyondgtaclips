@@ -38,7 +38,7 @@ def process(url, opts, cfg):
     if opts.brain_resolved == "agent":                # the assistant reads every part itself
         cfg["max_blocks"] = min(int(cfg["max_blocks"] or 99), int(cfg["agent_blocks"]))
     watch = Stopwatch()
-    args = media.ytdlp_args(url, opts.cookies)
+    args = media.ytdlp_args(url)
     work = work_dir(url)
     with watch.lap("look up"):
         meta = media.metadata(url, args, work)

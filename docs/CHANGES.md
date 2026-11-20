@@ -74,6 +74,14 @@ Built by Claude on 19 Nov 2026 from MiniMax's investigation (`OVERVIEW.md`, `DEV
   words only. Each clip remembers the stream time of its footage (`at`) so reruns stay exact.
 - README: new demo GIF (three story-checked Hook card clips + Stack and Bubble) and a
   before/after story check picture.
+- Security and easy install (2026-11-20, after viewers hit ChatGPT's "did not pass the safety
+  scan"): removed browser-cookie support and every hint to get around platform blocks
+  (age-restricted, subscriber-only and private videos are skipped); no more changing the
+  environment of the nested `claude -p`; no `curl | sh` hints; Python packages kept within
+  tested major versions; the face model's SHA-256 is verified; SKILL.md explains steps openly
+  instead of hiding commands. New SECURITY.md. SKILL.md, AGENTS.md and GEMINI.md tell an
+  assistant in a hosted cloud (chatgpt.com, ChatGPT Work, claude.ai) not to install it. README
+  Quick start: where it works, a one-message install, FAQ on the safety-scan message.
 - Punch-in zooms on volume spikes, synthesised whoosh + pop, cinematic push-in and fades,
   platform safe zones, creator credit in every template.
 - `--template all` renders every style per clip; `remake` re-renders with a new hook, title,

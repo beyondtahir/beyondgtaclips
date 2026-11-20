@@ -12,7 +12,7 @@ META_KEYS = ("id", "title", "channel", "uploader", "duration", "view_count", "li
              "release_timestamp", "upload_date")
 
 
-def ytdlp_args(url, cookies=None):
+def ytdlp_args(url):
     """Options every yt-dlp call for this URL needs."""
     args = ["--no-playlist", "--no-warnings"]
     youtube = "youtu" in url
@@ -22,8 +22,6 @@ def ytdlp_args(url, cookies=None):
             if path:
                 args += ["--js-runtimes", f"{runtime}:{path}"]
                 break
-    if cookies:
-        args += ["--cookies-from-browser", cookies]
     return args
 
 
@@ -32,16 +30,14 @@ def friendly(exc, url):
     text = str(exc)
     low = text.lower()
     if "confirm your age" in low or "sign in to confirm" in low or "age-restricted" in low:
-        return Problem("YouTube needs a login for this video (age-restricted). Run again with "
-                       "--cookies chrome (or the browser you are signed in with).")
+        return Problem("This video is age-restricted and needs a login. It is skipped: pick another stream.")
     if "kick" in url and ("403" in text or "forbidden" in low):
-        return Problem("Kick blocked the download. Run again with --cookies chrome.")
+        return Problem("Kick did not allow this download. Pick another stream.")
     if "subscriber" in low or "sub-only" in low or "only available to" in low:
-        return Problem("This VOD is subscriber-only. Run again with --cookies <browser> from an "
-                       "account that can watch it.")
+        return Problem("This VOD is subscriber-only, so it is not clipped. Pick a public stream.")
     if "not a bot" in low:
-        return Problem("YouTube is asking to confirm you're not a bot. Run again with "
-                       "--cookies chrome, or wait a while.")
+        return Problem("YouTube is asking for a short break (too many requests). Wait 15-30 minutes "
+                       "and run the same command again: everything done so far is kept.")
     return exc if isinstance(exc, Problem) else Problem(text)
 
 

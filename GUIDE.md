@@ -14,8 +14,13 @@ Works with **Claude** (Claude Code or the Claude desktop app's Code tab) and **C
 ### 1. What you need
 - A Mac or a Windows PC with about 3 GB of free space and internet
 - Claude (Claude Code / Claude desktop app) **or** ChatGPT desktop app with Codex
-- Note: the normal claude.ai or chatgpt.com websites can't run it; it needs the app that
-  works on your computer's files.
+- Note: the chatgpt.com and claude.ai websites, and ChatGPT Work "Skills" uploads, can't run it
+  (they are cloud sandboxes; ChatGPT may even say it "did not pass the safety scan"). It needs
+  the app on your computer.
+
+**Shortcut:** open Claude Code or Codex on your computer and paste
+*"Install the beyondgtaclips skill from https://github.com/beyondtahir/beyondgtaclips into your
+skills folder, then set it up."* It does steps 2-4 for you (and asks before installing anything).
 
 ### 2. Install two free tools
 Open the Terminal (Mac) or PowerShell (Windows) and paste:
@@ -26,14 +31,17 @@ Open the Terminal (Mac) or PowerShell (Windows) and paste:
   (close and reopen PowerShell afterwards)
 
 ### 3. Put the skill in your assistant's skills folder
-Unzip `beyondgtaclips` and move the whole folder to:
+Download it (`git clone https://github.com/beyondtahir/beyondgtaclips`, or **Code > Download ZIP**
+on GitHub and unzip it) and move the whole `beyondgtaclips` folder to:
 
 | Assistant | Mac | Windows |
 |---|---|---|
 | Claude | `~/.claude/skills/beyondgtaclips` | `C:\Users\<you>\.claude\skills\beyondgtaclips` |
 | ChatGPT (Codex) | `~/.codex/skills/beyondgtaclips` | `C:\Users\<you>\.codex\skills\beyondgtaclips` |
 
-Using both? Put it in both places.
+Using both? Put it in both places. Newer Codex versions also read `~/.agents/skills`.
+
+Nothing in it asks for a login, password, cookie or API key: see [SECURITY.md](SECURITY.md).
 
 ### 4. Let the assistant finish the setup
 Open a new chat and type:

@@ -16,8 +16,6 @@ LAST_FIND = DATA / "last_find.json"
 def _common(p):
     p.add_argument("--topic", help='what the clips are about (default "GTA 6")')
     p.add_argument("--keywords", help="extra comma-separated spellings a title may use")
-    p.add_argument("--cookies", choices=["chrome", "edge", "firefox", "brave", "safari", "opera", "vivaldi"],
-                   help="use this browser's login (age-restricted YouTube, Kick, sub-only VODs)")
 
 
 def _window(p):
@@ -180,7 +178,7 @@ def main(argv):
 
         if opts.command == "find":
             found, trend_words = discover.find(opts.topic, words, cfg, opts.count, opts.search,
-                                               opts.cookies, include_done=opts.all)
+                                               include_done=opts.all)
             if not found:
                 raise Problem("nothing found. Try --when month, other --keywords, or add creators "
                               f"to {DATA / 'watchlist.txt'}")
@@ -206,7 +204,7 @@ def main(argv):
             if not opts.count:
                 opts.count = max(1, -(-opts.total // 3)) if opts.total else 3   # ~3 clips per stream
             found, trend_words = discover.find(opts.topic, words, cfg, opts.count, opts.search,
-                                               opts.cookies, include_live=False)
+                                               include_live=False)
             print_found(found, trend_words)
             urls += [s["url"] for s in found]
             opts.trend_words = trend_words

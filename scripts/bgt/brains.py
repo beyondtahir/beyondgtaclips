@@ -101,10 +101,7 @@ def choose(wanted="auto", custom_cmd=None):
 
 def _child_env():
     env = dict(os.environ)
-    # A nested `claude -p` refuses to start if it thinks it's inside another session.
-    for key in ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT"):
-        env.pop(key, None)
-    env["NO_COLOR"] = "1"
+    env["NO_COLOR"] = "1"          # plain text replies, no colour codes
     return env
 
 

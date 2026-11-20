@@ -182,10 +182,10 @@ def trends(topic, words, cfg):
 
 # ---------------------------------------------------------------- full lookups + ranking
 
-def enrich(item, cookies=None):
+def enrich(item):
     """Upload time, likes, live viewers. Returns the item (updated) or None if unusable."""
     try:
-        full = json.loads(run(["yt-dlp", "-J", "--skip-download", *ytdlp_args(item["url"], cookies),
+        full = json.loads(run(["yt-dlp", "-J", "--skip-download", *ytdlp_args(item["url"]),
                                item["url"]], timeout=120))
     except (Problem, ValueError):
         return item
@@ -208,7 +208,7 @@ def enrich(item, cookies=None):
     return item
 
 
-def probe_language(item, cookies=None):
+def probe_language(item):
     """Listen to 30 s from the middle of the first hour and detect the spoken language."""
     import tempfile
     from .common import decode
@@ -216,7 +216,7 @@ def probe_language(item, cookies=None):
     start = min(1800, max(300, (item.get("seconds") or 3600) // 4))
     with tempfile.TemporaryDirectory() as tmp:
         try:
-            run(["yt-dlp", *ytdlp_args(item["url"], cookies), "-f", "ba/b",
+            run(["yt-dlp", *ytdlp_args(item["url"]), "-f", "ba/b",
                  "--download-sections", f"*{start}-{start + 30}", "-o", f"{tmp}/p.%(ext)s",
                  item["url"]], timeout=120)
             files = [f for f in __import__("pathlib").Path(tmp).glob("p.*") if not f.name.endswith(".part")]
@@ -299,7 +299,7 @@ def watchlist_entries(topic):
     return out
 
 
-def _from_watchlist(platform, handle, words, cfg, cookies):
+def _from_watchlist(platform, handle, words, cfg):
     """The creator's best recent matching video (not just the newest), or None."""
     if platform == "twitch":
         page = f"https://www.twitch.tv/{handle}/videos?filter=archives&sort=time"
@@ -307,7 +307,7 @@ def _from_watchlist(platform, handle, words, cfg, cookies):
         page = f"https://www.youtube.com/{handle if handle.startswith('@') else '@' + handle}/streams"
     else:
         page = f"https://kick.com/{handle}/videos"
-    args = ytdlp_args(page, cookies)
+    args = ytdlp_args(page)
     best = None
     for e in _listing(page, 6, args):
         title = e.get("title") or ""
@@ -319,7 +319,7 @@ def _from_watchlist(platform, handle, words, cfg, cookies):
         item = {"id": e.get("id") or url, "url": url, "platform": platform, "name": handle,
                 "title": title, "views": e.get("view_count") or 0, "seconds": e.get("duration") or 0,
                 "live": e.get("live_status") == "is_live", "from": "watchlist"}
-        item = enrich(item, cookies)
+        item = enrich(item)
         if not item:
             continue
         if item.get("posted") and time.time() - item["posted"] > cfg["max_age_hours"] * 3600:
@@ -331,7 +331,7 @@ def _from_watchlist(platform, handle, words, cfg, cookies):
 
 # ---------------------------------------------------------------- the whole search
 
-def find(topic, words, cfg, count=5, search=None, cookies=None, include_done=False,
+def find(topic, words, cfg, count=5, search=None, include_done=False,
          include_live=True):
     """Hottest first, at most one per creator, with a reason on every line."""
     base = words[:2] if words else [topic]
@@ -388,7 +388,7 @@ def find(topic, words, cfg, count=5, search=None, cookies=None, include_done=Fal
         while start < len(pool_items):
             head = pool_items[start:start + batch]
             say(f"checking {len(head)} of {len(pool_items)} candidate streams in detail...", "step")
-            full += [x for x in pool.map(lambda s: enrich(s, cookies), head) if x]
+            full += [x for x in pool.map(enrich, head) if x]
             start += batch
             usable = [x for x in full if not x.get("live")]
             if len({x["name"].lower() for x in usable}) >= count + 3 or start >= 4 * batch:
@@ -396,7 +396,7 @@ def find(topic, words, cfg, count=5, search=None, cookies=None, include_done=Fal
         if people:
             say(f"checking {len(people)} creator(s) on your watchlist...", "step")
             full += [r for r in pool.map(
-                lambda p: _from_watchlist(p[0], p[1], words, cfg, cookies), people) if r]
+                lambda p: _from_watchlist(p[0], p[1], words, cfg), people) if r]
 
     ranked = []
     for item in full:
@@ -428,7 +428,7 @@ def find(topic, words, cfg, count=5, search=None, cookies=None, include_done=Fal
         if unknown:
             say(f"listening to 30 s of {len(unknown)} stream(s) to check the spoken language...", "step")
             with ThreadPoolExecutor(max_workers=4) as pool:
-                langs = list(pool.map(lambda s: probe_language(s, cookies), unknown))
+                langs = list(pool.map(probe_language, unknown))
             for s, lang in zip(unknown, langs):
                 if lang:
                     s["language"] = lang

@@ -7,6 +7,12 @@ description: Beyond Tahir's GTA 6 clipping studio. Guides the user step by step 
 
 Long streams in, clean viral clips out. **You run everything; the user only says what they want.**
 
+**Where it runs.** Only on the user's own computer, inside Claude Code / the Claude desktop app
+or Codex (ChatGPT desktop app or Codex CLI). If you are in a hosted cloud sandbox (the ChatGPT
+website, ChatGPT Work "Skills", claude.ai), do not try to install or upload it: tell the user it
+needs the desktop app on their computer and point them to the Quick start in `README.md`.
+What it touches (no logins, no cookies, no API keys) is listed in `SECURITY.md`.
+
 `SKILL_DIR` = the folder this file is in. Every command is:
 
 - macOS / Linux: `python3 "SKILL_DIR/scripts/beyondgtaclips.py" <command> ...`
@@ -21,14 +27,14 @@ Run long jobs in the background and tell the user in plain words what is happeni
 1. `bgc setup` and wait for **READY** (private Python env in `~/.beyondgtaclips`, Whisper
    models ~220 MB, face model). Needs ffmpeg and deno or node:
    macOS `brew install ffmpeg deno` · Windows `winget install Gyan.FFmpeg` and `winget install DenoLand.Deno`.
-   Ask the user before anything that needs an admin password.
+   Ask the user before installing anything on their computer, and say what it is.
 2. `bgc doctor` shows what is installed and which AI will pick moments.
 
 ## 1. The guided workflow (follow it in this order, in Claude and in ChatGPT/Codex)
 
 The user may know nothing about clipping. Guide them in plain words, one step at a time,
-and tell them what is happening while long steps run. Never show them raw commands unless
-they ask.
+and tell them what is happening while long steps run. Explain each step in plain words instead
+of pasting long commands, and show the exact command whenever they ask.
 
 **Step 0: first time only.** If `bgc doctor` says it is not set up, say *"I'll set things up
 first, it takes a few minutes once"* and run `bgc setup` (section 0).
@@ -167,9 +173,9 @@ ends with zero clips.
 
 ## 5. When something goes wrong
 
-- YouTube asks for a login or "not a bot" (happens after many searches in a short time):
-  wait 15-30 minutes, or add `--cookies chrome` (the browser the user is signed in with;
-  ask the user first, it reads that browser's YouTube login).
+- YouTube asks for a short break ("not a bot", after many searches in a short time): wait
+  15-30 minutes and run the same command again. The skill never uses the user's logins or
+  browser cookies; age-restricted and subscriber-only videos are skipped.
 - Downloads fail with "unable to extract": update yt-dlp: `~/.beyondgtaclips/venv/bin/pip install -U yt-dlp`.
 - An AI CLI is not signed in: it switches to agent mode by itself with `--brain auto`.
 - Run the same command again after any stop: everything is cached and resumes.
