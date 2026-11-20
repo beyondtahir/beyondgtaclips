@@ -230,11 +230,11 @@ winget install DenoLand.Deno
 **2. Add the skill** to your assistant's skills folder:
 
 ```bash
-git clone https://github.com/beyondtahir/beyondgtaclips ~/.claude/skills/beyondgtaclips
+git clone --depth 1 https://github.com/beyondtahir/beyondgtaclips ~/.claude/skills/beyondgtaclips
 ```
 
 ```bash
-git clone https://github.com/beyondtahir/beyondgtaclips ~/.codex/skills/beyondgtaclips
+git clone --depth 1 https://github.com/beyondtahir/beyondgtaclips ~/.codex/skills/beyondgtaclips
 ```
 
 The first line is for Claude, the second for Codex (newer Codex versions also read

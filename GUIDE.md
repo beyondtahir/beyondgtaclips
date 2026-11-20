@@ -31,7 +31,7 @@ Open the Terminal (Mac) or PowerShell (Windows) and paste:
   (close and reopen PowerShell afterwards)
 
 ### 3. Put the skill in your assistant's skills folder
-Download it (`git clone https://github.com/beyondtahir/beyondgtaclips`, or **Code > Download ZIP**
+Download it (`git clone --depth 1 https://github.com/beyondtahir/beyondgtaclips`, or **Code > Download ZIP**
 on GitHub and unzip it) and move the whole `beyondgtaclips` folder to:
 
 | Assistant | Mac | Windows |
