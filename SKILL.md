@@ -26,8 +26,13 @@ Run long jobs in the background and tell the user in plain words what is happeni
 
 1. `bgc setup` and wait for **READY** (private Python env in `~/.beyondgtaclips`, Whisper
    models ~220 MB, face model). Needs ffmpeg and deno or node:
-   macOS `brew install ffmpeg deno` · Windows `winget install Gyan.FFmpeg` and `winget install DenoLand.Deno`.
+   macOS `brew install ffmpeg deno` · Windows `winget install Gyan.FFmpeg` and `winget install DenoLand.Deno`
+   (or `OpenJS.NodeJS.LTS`). On macOS/Linux/WSL setup adds the official Deno itself when none is found.
    Ask the user before installing anything on their computer, and say what it is.
+   **Windows Smart App Control / app control:** if setup or a command says *"Windows blocked ..."*,
+   never suggest turning Smart App Control or any security off, and never try to get around it.
+   Follow `WINDOWS.md`: setup with the user's own Python (`bgc setup --system-python`), or
+   the WSL way, which keeps every protection on.
 2. `bgc doctor` shows what is installed and which AI will pick moments.
 
 ## 1. The guided workflow (follow it in this order, in Claude and in ChatGPT/Codex)

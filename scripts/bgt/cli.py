@@ -7,7 +7,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 
 from . import brains, discover, pipeline, settings
-from .common import CACHE, DATA, MODELS, Problem, need, read_json, say, write_json
+from .common import CACHE, DATA, MODELS, Problem, has, need, read_json, say, write_json
 
 AGENT_EXIT = 3
 LAST_FIND = DATA / "last_find.json"
@@ -108,9 +108,10 @@ def styles():
 def doctor():
     ok = True
     for tool in ("ffmpeg", "ffprobe", "yt-dlp"):
-        found = shutil.which(tool)
+        found = has(tool)
         print(f"  {'ok ' if found else 'MISSING'} {tool}")
         ok &= bool(found)
+    print(f"  python: {sys.executable} ({sys.version.split()[0]})")
     js = shutil.which("deno") or shutil.which("node")
     print(f"  {'ok ' if js else 'MISSING'} JavaScript runtime (deno/node) for YouTube")
     for b in brains.ORDER:

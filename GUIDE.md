@@ -29,6 +29,7 @@ Open the Terminal (Mac) or PowerShell (Windows) and paste:
   (no Homebrew yet? install it first from brew.sh)
 - **Windows:** `winget install Gyan.FFmpeg` then `winget install DenoLand.Deno`
   (close and reopen PowerShell afterwards)
+- **Windows with Smart App Control on:** keep it on and follow [WINDOWS.md](WINDOWS.md) instead.
 
 ### 3. Put the skill in your assistant's skills folder
 Download it (`git clone --depth 1 https://github.com/beyondtahir/beyondgtaclips`, or **Code > Download ZIP**

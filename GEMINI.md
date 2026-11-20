@@ -3,6 +3,8 @@
 Read `SKILL.md` in this folder and follow it exactly. It runs only on the user's own computer;
 in a hosted cloud sandbox (ChatGPT website, ChatGPT Work Skills, claude.ai) do not install it,
 tell the user to use the desktop app instead. `SECURITY.md` lists everything it touches.
+On Windows, if anything says *"Windows blocked ..."* (Smart App Control), never suggest turning
+security off: follow `WINDOWS.md`.
 
 Short version:
 

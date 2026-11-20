@@ -46,26 +46,59 @@ def say(msg, kind="info"):
         print(prefix + (f"{label}: " if label else "") + msg, flush=True)
 
 
+WINDOWS_GUIDE = "https://github.com/beyondtahir/beyondgtaclips/blob/main/WINDOWS.md"
+
+
+def blocked_by_windows(text_or_exc):
+    """True when Windows Smart App Control / app control refused to run a file."""
+    return getattr(text_or_exc, "winerror", None) == 4551 or \
+        "application control" in str(text_or_exc).lower()
+
+
+def blocked_problem(name):
+    return Problem(f"Windows blocked {name} (Smart App Control or your organisation's app control). "
+                   f"Please do not turn it off: use the safe Windows setup in WSL instead, {WINDOWS_GUIDE}")
+
+
 def run(cmd, timeout=None, cwd=None, stdin=None, env=None, quiet_fail=False):
-    """Run a command and return its stdout as text. Raises Problem on failure."""
+    """Run a command and return its stdout as text. Raises Problem on failure.
+    yt-dlp always runs as 'python -m yt_dlp' with this same Python, never as a separate .exe."""
+    name = Path(str(cmd[0])).name
+    if cmd[0] == "yt-dlp":
+        cmd = [sys.executable, "-m", "yt_dlp", *cmd[1:]]
     try:
         proc = subprocess.run(
             [str(c) for c in cmd], input=stdin, capture_output=True, text=True,
             encoding="utf-8", errors="replace", timeout=timeout, cwd=cwd, env=env)
     except subprocess.TimeoutExpired as exc:
-        raise Problem(f"{Path(str(cmd[0])).name} took longer than {timeout}s") from exc
+        raise Problem(f"{name} took longer than {timeout}s") from exc
     except FileNotFoundError as exc:
-        raise Problem(f"{cmd[0]} is not installed") from exc
+        raise Problem(f"{name} is not installed") from exc
+    except OSError as exc:
+        if blocked_by_windows(exc):
+            raise blocked_problem(name) from exc
+        raise
     if proc.returncode != 0:
         if quiet_fail:
             return None
-        detail = (proc.stderr or proc.stdout or "").strip().splitlines()
-        raise Problem(f"{Path(str(cmd[0])).name} failed: " + " | ".join(detail[-6:])[:900])
+        detail = (proc.stderr or proc.stdout or "").strip()
+        if blocked_by_windows(detail):
+            raise blocked_problem(name)
+        lines = detail.splitlines()
+        raise Problem(f"{name} failed: " + " | ".join(lines[-6:])[:900])
     return proc.stdout
 
 
+def has(binary):
+    """True when a tool is available. yt-dlp counts when its Python module is installed."""
+    if binary == "yt-dlp":
+        import importlib.util
+        return importlib.util.find_spec("yt_dlp") is not None
+    return bool(shutil.which(binary))
+
+
 def need(binary, fix):
-    if not shutil.which(binary):
+    if not has(binary):
         raise Problem(f"'{binary}' was not found. {fix}")
 
 

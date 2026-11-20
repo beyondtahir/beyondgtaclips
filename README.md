@@ -198,6 +198,8 @@ right in Instagram's 4:5 feed crop.
 | ✅ **Claude Code** or the **Claude desktop app** (Code tab) on Mac or Windows | works |
 | ✅ **ChatGPT desktop app with Codex**, or the **Codex CLI**, on Mac or Windows | works |
 | ✅ **ChatGPT Work in the desktop app**, with the task set to run **on your computer** | works |
+| ✅ **Windows 11 with Smart App Control on** (keep it on!) | works, see [WINDOWS.md](WINDOWS.md) |
+| ✅ **GitHub Copilot agent mode** in VS Code | should work with `--brain agent` (not tested yet) |
 | ❌ **chatgpt.com**, **ChatGPT Work in the cloud** ("Skills" upload), **claude.ai** website | won't work |
 
 The websites run in a cloud sandbox: they can't run the video tools, keep your clips or download
@@ -228,6 +230,8 @@ winget install Gyan.FFmpeg
 winget install DenoLand.Deno
 ```
 
+🛡️ Windows with **Smart App Control** on? Don't turn it off: follow [WINDOWS.md](WINDOWS.md).
+
 **2. Add the skill** to your assistant's skills folder:
 
 ```bash
@@ -247,7 +251,7 @@ The first line is for Claude, the second for Codex (newer Codex versions also re
 Codex asks for permission to use the internet and save files: choose **Allow**.
 
 🔒 **Safe by design:** no logins, no browser cookies, no API keys, nothing uploaded. Everything it
-touches is listed in [SECURITY.md](SECURITY.md).
+touches is listed in [SECURITY.md](SECURITY.md). It never asks you to turn off Windows security.
 
 👉 **Full step-by-step guide:** [GUIDE.md](GUIDE.md)
 

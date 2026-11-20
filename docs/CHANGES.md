@@ -82,6 +82,14 @@ Built by Claude on 19 Nov 2026 from MiniMax's investigation (`OVERVIEW.md`, `DEV
   instead of hiding commands. New SECURITY.md. SKILL.md, AGENTS.md and GEMINI.md tell an
   assistant in a hosted cloud (chatgpt.com, ChatGPT Work, claude.ai) not to install it. README
   Quick start: where it works, a one-message install, FAQ on the safety-scan message.
+- Windows Smart App Control (2026-11-21, GitHub issue #2): setup never creates or downloads a
+  new `python.exe` on Windows (no `uv venv`); `--system-python` uses the user's own trusted
+  Python with packages in `~/.beyondgtaclips/packages`, chosen by itself when Smart App Control
+  is on; yt-dlp runs as `python -m yt_dlp` everywhere (no pip-made `.exe`); setup tests that ffmpeg
+  runs and that every package loads, and a Windows block stops with a plain message pointing to
+  the new WINDOWS.md (WSL way, or straight on Windows) instead of a traceback. Python 3.10 to
+  3.14 (3.15 has no onnxruntime builds yet). Mac/Linux/WSL: setup adds the official Deno from PyPI
+  when there is no deno or node.
 - Punch-in zooms on volume spikes, synthesised whoosh + pop, cinematic push-in and fades,
   platform safe zones, creator credit in every template.
 - `--template all` renders every style per clip; `remake` re-renders with a new hook, title,
