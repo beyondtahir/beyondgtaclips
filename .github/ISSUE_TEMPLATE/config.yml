@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: How to install (Quick start)
+    url: https://github.com/beyondtahir/beyondgtaclips#-quick-start
+    about: Install steps, and where it works (not on chatgpt.com or ChatGPT Work in the cloud).
+  - name: Step-by-step guide
+    url: https://github.com/beyondtahir/beyondgtaclips/blob/main/GUIDE.md
+    about: The full guide for beginners.

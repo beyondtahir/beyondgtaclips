@@ -1,0 +1,49 @@
+name: Something went wrong
+description: The skill stopped, failed or made a bad clip.
+title: "[Problem] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please check the [FAQ](https://github.com/beyondtahir/beyondgtaclips#-faq) first.
+        Never paste passwords, keys or tokens here. This skill never needs them.
+  - type: dropdown
+    id: assistant
+    attributes:
+      label: Which assistant?
+      options:
+        - Claude Code / Claude desktop app
+        - ChatGPT desktop app (Codex)
+        - ChatGPT Work (running on my computer)
+        - Codex CLI
+        - Kimi / Gemini / other
+        - No AI (--brain none)
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Your computer
+      options: [Mac, Windows, Linux]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you ask for, and what went wrong?
+      placeholder: I said "make 4 GTA 6 clips" and it stopped after finding the streams.
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error message or last lines it printed
+      render: text
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of the health check
+      description: Ask your assistant to "run the beyondgtaclips doctor" and paste what it prints.
+      render: text

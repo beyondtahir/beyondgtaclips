@@ -1,0 +1,12 @@
+name: Idea or question
+description: Suggest a feature, a new style, or ask how something works.
+title: "[Idea] "
+labels: [question]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea or question
+      placeholder: Could it make clips for Fortnite streams too?
+    validations:
+      required: true
